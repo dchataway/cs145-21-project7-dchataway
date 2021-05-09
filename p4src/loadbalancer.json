@@ -1,0 +1,2544 @@
+{
+  "header_types" : [
+    {
+      "name" : "scalars_0",
+      "id" : 0,
+      "fields" : [
+        ["id_0", 32, false],
+        ["num_0", 32, false],
+        ["id_1", 32, false],
+        ["num_1", 32, false],
+        ["src_ip_0", 32, false],
+        ["probability_0", 16, false],
+        ["metadata._ecmp_hash0", 14, false],
+        ["metadata._ecmp_group_id1", 14, false],
+        ["metadata._egress_type2", 4, false],
+        ["metadata._priority3", 4, false],
+        ["metadata._interval4", 48, false],
+        ["metadata._flow_index5", 32, false],
+        ["_padding_0", 4, false]
+      ]
+    },
+    {
+      "name" : "standard_metadata",
+      "id" : 1,
+      "fields" : [
+        ["ingress_port", 9, false],
+        ["egress_spec", 9, false],
+        ["egress_port", 9, false],
+        ["instance_type", 32, false],
+        ["packet_length", 32, false],
+        ["enq_timestamp", 32, false],
+        ["enq_qdepth", 19, false],
+        ["deq_timedelta", 32, false],
+        ["deq_qdepth", 19, false],
+        ["ingress_global_timestamp", 48, false],
+        ["egress_global_timestamp", 48, false],
+        ["mcast_grp", 16, false],
+        ["egress_rid", 16, false],
+        ["checksum_error", 1, false],
+        ["parser_error", 32, false],
+        ["priority", 3, false],
+        ["_padding", 3, false]
+      ]
+    },
+    {
+      "name" : "ethernet_t",
+      "id" : 2,
+      "fields" : [
+        ["dstAddr", 48, false],
+        ["srcAddr", 48, false],
+        ["etherType", 16, false]
+      ]
+    },
+    {
+      "name" : "telemetry_t",
+      "id" : 3,
+      "fields" : [
+        ["enq_qdepth", 16, false],
+        ["nextHeaderType", 16, false]
+      ]
+    },
+    {
+      "name" : "ipv4_t",
+      "id" : 4,
+      "fields" : [
+        ["version", 4, false],
+        ["ihl", 4, false],
+        ["dscp", 6, false],
+        ["ecn", 2, false],
+        ["totalLen", 16, false],
+        ["identification", 16, false],
+        ["flags", 3, false],
+        ["fragOffset", 13, false],
+        ["ttl", 8, false],
+        ["protocol", 8, false],
+        ["hdrChecksum", 16, false],
+        ["srcAddr", 32, false],
+        ["dstAddr", 32, false]
+      ]
+    },
+    {
+      "name" : "udp_t",
+      "id" : 5,
+      "fields" : [
+        ["srcPort", 16, false],
+        ["dstPort", 16, false],
+        ["length_", 16, false],
+        ["checksum", 16, false]
+      ]
+    }
+  ],
+  "headers" : [
+    {
+      "name" : "scalars",
+      "id" : 0,
+      "header_type" : "scalars_0",
+      "metadata" : true,
+      "pi_omit" : true
+    },
+    {
+      "name" : "standard_metadata",
+      "id" : 1,
+      "header_type" : "standard_metadata",
+      "metadata" : true,
+      "pi_omit" : true
+    },
+    {
+      "name" : "ethernet",
+      "id" : 2,
+      "header_type" : "ethernet_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "telemetry",
+      "id" : 3,
+      "header_type" : "telemetry_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "ipv4",
+      "id" : 4,
+      "header_type" : "ipv4_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "udp",
+      "id" : 5,
+      "header_type" : "udp_t",
+      "metadata" : false,
+      "pi_omit" : true
+    }
+  ],
+  "header_stacks" : [],
+  "header_union_types" : [],
+  "header_unions" : [],
+  "header_union_stacks" : [],
+  "field_lists" : [
+    {
+      "id" : 1,
+      "name" : "cloned_t",
+      "source_info" : {
+        "filename" : "p4src/loadbalancer.p4",
+        "line" : 250,
+        "column" : 24,
+        "source_fragment" : "meta"
+      },
+      "elements" : []
+    },
+    {
+      "id" : 2,
+      "name" : "fl",
+      "source_info" : {
+        "filename" : "p4src/loadbalancer.p4",
+        "line" : 295,
+        "column" : 67,
+        "source_fragment" : "meta"
+      },
+      "elements" : [
+        {
+          "type" : "field",
+          "value" : ["scalars", "metadata._ecmp_hash0"]
+        },
+        {
+          "type" : "field",
+          "value" : ["scalars", "metadata._ecmp_group_id1"]
+        },
+        {
+          "type" : "field",
+          "value" : ["scalars", "metadata._egress_type2"]
+        },
+        {
+          "type" : "field",
+          "value" : ["scalars", "metadata._priority3"]
+        },
+        {
+          "type" : "field",
+          "value" : ["scalars", "metadata._interval4"]
+        },
+        {
+          "type" : "field",
+          "value" : ["scalars", "metadata._flow_index5"]
+        }
+      ]
+    }
+  ],
+  "errors" : [
+    ["NoError", 1],
+    ["PacketTooShort", 2],
+    ["NoMatch", 3],
+    ["StackOutOfBounds", 4],
+    ["HeaderTooShort", 5],
+    ["ParserTimeout", 6],
+    ["ParserInvalidArgument", 7]
+  ],
+  "enums" : [],
+  "parsers" : [
+    {
+      "name" : "parser",
+      "id" : 0,
+      "init_state" : "start",
+      "parse_states" : [
+        {
+          "name" : "start",
+          "id" : 0,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "ethernet"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "hexstr",
+              "value" : "0x0800",
+              "mask" : null,
+              "next_state" : "parse_ipv4"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x7777",
+              "mask" : null,
+              "next_state" : "parse_telemetry"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x7778",
+              "mask" : null,
+              "next_state" : "parse_ipv4"
+            },
+            {
+              "value" : "default",
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : [
+            {
+              "type" : "field",
+              "value" : ["ethernet", "etherType"]
+            }
+          ]
+        },
+        {
+          "name" : "parse_telemetry",
+          "id" : 1,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "telemetry"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "hexstr",
+              "value" : "0x0800",
+              "mask" : null,
+              "next_state" : "parse_ipv4"
+            },
+            {
+              "value" : "default",
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : [
+            {
+              "type" : "field",
+              "value" : ["telemetry", "nextHeaderType"]
+            }
+          ]
+        },
+        {
+          "name" : "parse_ipv4",
+          "id" : 2,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "ipv4"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "hexstr",
+              "value" : "0x11",
+              "mask" : null,
+              "next_state" : "parse_udp"
+            },
+            {
+              "value" : "default",
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : [
+            {
+              "type" : "field",
+              "value" : ["ipv4", "protocol"]
+            }
+          ]
+        },
+        {
+          "name" : "parse_udp",
+          "id" : 3,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "udp"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "value" : "default",
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : []
+        }
+      ]
+    }
+  ],
+  "parse_vsets" : [],
+  "deparsers" : [
+    {
+      "name" : "deparser",
+      "id" : 0,
+      "source_info" : {
+        "filename" : "p4src/include/parsers.p4",
+        "line" : 60,
+        "column" : 8,
+        "source_fragment" : "MyDeparser"
+      },
+      "order" : ["ethernet", "telemetry", "ipv4", "udp"]
+    }
+  ],
+  "meter_arrays" : [],
+  "counter_arrays" : [],
+  "register_arrays" : [
+    {
+      "name" : "MyIngress.flow_id",
+      "id" : 0,
+      "source_info" : {
+        "filename" : "p4src/loadbalancer.p4",
+        "line" : 39,
+        "column" : 28,
+        "source_fragment" : "flow_id"
+      },
+      "size" : 1024,
+      "bitwidth" : 32
+    },
+    {
+      "name" : "MyEgress.read_timestamp",
+      "id" : 1,
+      "source_info" : {
+        "filename" : "p4src/loadbalancer.p4",
+        "line" : 226,
+        "column" : 28,
+        "source_fragment" : "read_timestamp"
+      },
+      "size" : 1024,
+      "bitwidth" : 48
+    }
+  ],
+  "calculations" : [
+    {
+      "name" : "calc",
+      "id" : 0,
+      "algo" : "crc16",
+      "input" : [
+        {
+          "type" : "field",
+          "value" : ["ipv4", "dstAddr"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "srcAddr"]
+        },
+        {
+          "type" : "field",
+          "value" : ["udp", "srcPort"]
+        },
+        {
+          "type" : "field",
+          "value" : ["udp", "dstPort"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "protocol"]
+        }
+      ]
+    },
+    {
+      "name" : "calc_0",
+      "id" : 1,
+      "algo" : "crc16",
+      "input" : [
+        {
+          "type" : "field",
+          "value" : ["ipv4", "srcAddr"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "dstAddr"]
+        },
+        {
+          "type" : "field",
+          "value" : ["udp", "srcPort"]
+        },
+        {
+          "type" : "field",
+          "value" : ["udp", "dstPort"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "protocol"]
+        }
+      ]
+    },
+    {
+      "name" : "calc_1",
+      "id" : 2,
+      "algo" : "crc16",
+      "input" : [
+        {
+          "type" : "field",
+          "value" : ["ipv4", "srcAddr"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "dstAddr"]
+        },
+        {
+          "type" : "field",
+          "value" : ["udp", "srcPort"]
+        },
+        {
+          "type" : "field",
+          "value" : ["udp", "dstPort"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "protocol"]
+        },
+        {
+          "type" : "field",
+          "value" : ["scalars", "num_1"]
+        }
+      ]
+    },
+    {
+      "name" : "calc_2",
+      "id" : 3,
+      "algo" : "crc16",
+      "input" : [
+        {
+          "type" : "field",
+          "value" : ["ipv4", "srcAddr"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "dstAddr"]
+        },
+        {
+          "type" : "field",
+          "value" : ["udp", "srcPort"]
+        },
+        {
+          "type" : "field",
+          "value" : ["udp", "dstPort"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "protocol"]
+        }
+      ]
+    },
+    {
+      "name" : "calc_3",
+      "id" : 4,
+      "source_info" : {
+        "filename" : "p4src/loadbalancer.p4",
+        "line" : 324,
+        "column" : 1,
+        "source_fragment" : "update_checksum( ..."
+      },
+      "algo" : "csum16",
+      "input" : [
+        {
+          "type" : "field",
+          "value" : ["ipv4", "version"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "ihl"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "dscp"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "ecn"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "totalLen"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "identification"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "flags"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "fragOffset"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "ttl"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "protocol"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "srcAddr"]
+        },
+        {
+          "type" : "field",
+          "value" : ["ipv4", "dstAddr"]
+        }
+      ]
+    }
+  ],
+  "learn_lists" : [],
+  "actions" : [
+    {
+      "name" : "NoAction",
+      "id" : 0,
+      "runtime_data" : [],
+      "primitives" : []
+    },
+    {
+      "name" : "NoAction",
+      "id" : 1,
+      "runtime_data" : [],
+      "primitives" : []
+    },
+    {
+      "name" : "NoAction",
+      "id" : 2,
+      "runtime_data" : [],
+      "primitives" : []
+    },
+    {
+      "name" : "MyIngress.drop",
+      "id" : 3,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "mark_to_drop",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "standard_metadata"
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 42,
+            "column" : 8,
+            "source_fragment" : "mark_to_drop(standard_metadata)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.drop",
+      "id" : 4,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "mark_to_drop",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "standard_metadata"
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 42,
+            "column" : 8,
+            "source_fragment" : "mark_to_drop(standard_metadata)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.drop",
+      "id" : 5,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "mark_to_drop",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "standard_metadata"
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 42,
+            "column" : 8,
+            "source_fragment" : "mark_to_drop(standard_metadata)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.set_type",
+      "id" : 6,
+      "runtime_data" : [
+        {
+          "name" : "egress_type",
+          "bitwidth" : 4
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "metadata._egress_type2"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 47,
+            "column" : 8,
+            "source_fragment" : "meta.egress_type = egress_type"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.set_priority",
+      "id" : 7,
+      "runtime_data" : [
+        {
+          "name" : "priority",
+          "bitwidth" : 4
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "metadata._priority3"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 75,
+            "column" : 8,
+            "source_fragment" : "meta.priority = priority"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.get_flow_id",
+      "id" : 8,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "modify_field_rng_uniform",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "num_0"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00000000"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x000186a0"
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 96,
+            "column" : 8,
+            "source_fragment" : "random(num, (bit<32>)0, (bit<32>)100000)"
+          }
+        },
+        {
+          "op" : "modify_field_with_hash_based_offset",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "id_0"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00"
+            },
+            {
+              "type" : "calculation",
+              "value" : "calc"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x0400"
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 99,
+            "column" : 8,
+            "source_fragment" : "hash(id, HashAlgorithm.crc16,(bit<1>)0, ..."
+          }
+        },
+        {
+          "op" : "register_write",
+          "parameters" : [
+            {
+              "type" : "register_array",
+              "value" : "MyIngress.flow_id"
+            },
+            {
+              "type" : "field",
+              "value" : ["scalars", "id_0"]
+            },
+            {
+              "type" : "field",
+              "value" : ["scalars", "num_0"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 107,
+            "column" : 8,
+            "source_fragment" : "flow_id.write(id, num)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.ecmp_group",
+      "id" : 9,
+      "runtime_data" : [
+        {
+          "name" : "ecmp_group_id",
+          "bitwidth" : 14
+        },
+        {
+          "name" : "num_nhops",
+          "bitwidth" : 16
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "modify_field_with_hash_based_offset",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "id_1"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00"
+            },
+            {
+              "type" : "calculation",
+              "value" : "calc_0"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x0400"
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 119,
+            "column" : 8,
+            "source_fragment" : "hash(id, HashAlgorithm.crc16,(bit<1>)0, ..."
+          }
+        },
+        {
+          "op" : "register_read",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "num_1"]
+            },
+            {
+              "type" : "register_array",
+              "value" : "MyIngress.flow_id"
+            },
+            {
+              "type" : "field",
+              "value" : ["scalars", "id_1"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 127,
+            "column" : 8,
+            "source_fragment" : "flow_id.read(num, id)"
+          }
+        },
+        {
+          "op" : "modify_field_with_hash_based_offset",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "metadata._ecmp_hash0"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00"
+            },
+            {
+              "type" : "calculation",
+              "value" : "calc_1"
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 1
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 130,
+            "column" : 8,
+            "source_fragment" : "hash(meta.ecmp_hash, ..."
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "metadata._ecmp_group_id1"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 141,
+            "column" : 5,
+            "source_fragment" : "meta.ecmp_group_id = ecmp_group_id"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.set_nhop",
+      "id" : 10,
+      "runtime_data" : [
+        {
+          "name" : "dstAddr",
+          "bitwidth" : 48
+        },
+        {
+          "name" : "port",
+          "bitwidth" : 9
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ethernet", "srcAddr"]
+            },
+            {
+              "type" : "field",
+              "value" : ["ethernet", "dstAddr"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 147,
+            "column" : 8,
+            "source_fragment" : "hdr.ethernet.srcAddr = hdr.ethernet.dstAddr"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ethernet", "dstAddr"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 150,
+            "column" : 8,
+            "source_fragment" : "hdr.ethernet.dstAddr = dstAddr"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["standard_metadata", "egress_spec"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 1
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 153,
+            "column" : 8,
+            "source_fragment" : "standard_metadata.egress_spec = port"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ipv4", "ttl"]
+            },
+            {
+              "type" : "expression",
+              "value" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "&",
+                  "left" : {
+                    "type" : "expression",
+                    "value" : {
+                      "op" : "+",
+                      "left" : {
+                        "type" : "field",
+                        "value" : ["ipv4", "ttl"]
+                      },
+                      "right" : {
+                        "type" : "hexstr",
+                        "value" : "0xff"
+                      }
+                    }
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0xff"
+                  }
+                }
+              }
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 156,
+            "column" : 8,
+            "source_fragment" : "hdr.ipv4.ttl = hdr.ipv4.ttl - 1"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.set_nhop",
+      "id" : 11,
+      "runtime_data" : [
+        {
+          "name" : "dstAddr",
+          "bitwidth" : 48
+        },
+        {
+          "name" : "port",
+          "bitwidth" : 9
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ethernet", "srcAddr"]
+            },
+            {
+              "type" : "field",
+              "value" : ["ethernet", "dstAddr"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 147,
+            "column" : 8,
+            "source_fragment" : "hdr.ethernet.srcAddr = hdr.ethernet.dstAddr"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ethernet", "dstAddr"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 150,
+            "column" : 8,
+            "source_fragment" : "hdr.ethernet.dstAddr = dstAddr"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["standard_metadata", "egress_spec"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 1
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 153,
+            "column" : 8,
+            "source_fragment" : "standard_metadata.egress_spec = port"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ipv4", "ttl"]
+            },
+            {
+              "type" : "expression",
+              "value" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "&",
+                  "left" : {
+                    "type" : "expression",
+                    "value" : {
+                      "op" : "+",
+                      "left" : {
+                        "type" : "field",
+                        "value" : ["ipv4", "ttl"]
+                      },
+                      "right" : {
+                        "type" : "hexstr",
+                        "value" : "0xff"
+                      }
+                    }
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0xff"
+                  }
+                }
+              }
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 156,
+            "column" : 8,
+            "source_fragment" : "hdr.ipv4.ttl = hdr.ipv4.ttl - 1"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "loadbalancer188",
+      "id" : 12,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ethernet", "etherType"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x7778"
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 188,
+            "column" : 12,
+            "source_fragment" : "hdr.ethernet.etherType = 0x7778"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "src_ip_0"]
+            },
+            {
+              "type" : "field",
+              "value" : ["ipv4", "srcAddr"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 189,
+            "column" : 12,
+            "source_fragment" : "bit<32> src_ip = hdr.ipv4.srcAddr;"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ipv4", "srcAddr"]
+            },
+            {
+              "type" : "field",
+              "value" : ["ipv4", "dstAddr"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 190,
+            "column" : 12,
+            "source_fragment" : "hdr.ipv4.srcAddr = hdr.ipv4.dstAddr"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ipv4", "dstAddr"]
+            },
+            {
+              "type" : "field",
+              "value" : ["scalars", "src_ip_0"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 191,
+            "column" : 12,
+            "source_fragment" : "hdr.ipv4.dstAddr = src_ip"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyEgress.get_flow_timestamp",
+      "id" : 13,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "modify_field_with_hash_based_offset",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "metadata._flow_index5"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00"
+            },
+            {
+              "type" : "calculation",
+              "value" : "calc_2"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x0400"
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 232,
+            "column" : 8,
+            "source_fragment" : "hash(meta.flow_index, HashAlgorithm.crc16,(bit<1>)0, ..."
+          }
+        },
+        {
+          "op" : "register_read",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "metadata._interval4"]
+            },
+            {
+              "type" : "register_array",
+              "value" : "MyEgress.read_timestamp"
+            },
+            {
+              "type" : "field",
+              "value" : ["scalars", "metadata._flow_index5"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 241,
+            "column" : 8,
+            "source_fragment" : "read_timestamp.read(meta.interval, meta.flow_index)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "loadbalancer250",
+      "id" : 14,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "recirculate",
+          "parameters" : [
+            {
+              "type" : "hexstr",
+              "value" : "0x1"
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 250,
+            "column" : 12,
+            "source_fragment" : "recirculate(meta.cloned)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "loadbalancer266",
+      "id" : 15,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["telemetry", "enq_qdepth"]
+            },
+            {
+              "type" : "expression",
+              "value" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "&",
+                  "left" : {
+                    "type" : "field",
+                    "value" : ["standard_metadata", "enq_qdepth"]
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0xffff"
+                  }
+                }
+              }
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 266,
+            "column" : 28,
+            "source_fragment" : "hdr.telemetry.enq_qdepth = (depth)standard_metadata.enq_qdepth"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "loadbalancer295",
+      "id" : 16,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "clone_egress_pkt_to_egress",
+          "parameters" : [
+            {
+              "type" : "hexstr",
+              "value" : "0x00000064"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x2"
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 295,
+            "column" : 40,
+            "source_fragment" : "clone3(CloneType.E2E, 100, meta)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "loadbalancer286",
+      "id" : 17,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "register_write",
+          "parameters" : [
+            {
+              "type" : "register_array",
+              "value" : "MyEgress.read_timestamp"
+            },
+            {
+              "type" : "field",
+              "value" : ["scalars", "metadata._flow_index5"]
+            },
+            {
+              "type" : "field",
+              "value" : ["standard_metadata", "ingress_global_timestamp"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 286,
+            "column" : 32,
+            "source_fragment" : "read_timestamp.write(meta.flow_index, standard_metadata.ingress_global_timestamp)"
+          }
+        },
+        {
+          "op" : "modify_field_rng_uniform",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["scalars", "probability_0"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x0000"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x0064"
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 290,
+            "column" : 32,
+            "source_fragment" : "random(probability, (bit<16>)0, (bit<16>)100)"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "loadbalancer272",
+      "id" : 18,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "remove_header",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "telemetry"
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 272,
+            "column" : 24,
+            "source_fragment" : "hdr.telemetry.setInvalid()"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ethernet", "etherType"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x0800"
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 274,
+            "column" : 24,
+            "source_fragment" : "hdr.ethernet.etherType = 0x800"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "loadbalancer307",
+      "id" : 19,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "add_header",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "telemetry"
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 307,
+            "column" : 24,
+            "source_fragment" : "hdr.telemetry.setValid()"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["telemetry", "enq_qdepth"]
+            },
+            {
+              "type" : "expression",
+              "value" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "&",
+                  "left" : {
+                    "type" : "field",
+                    "value" : ["standard_metadata", "enq_qdepth"]
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0xffff"
+                  }
+                }
+              }
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 308,
+            "column" : 24,
+            "source_fragment" : "hdr.telemetry.enq_qdepth = (depth)standard_metadata.enq_qdepth"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["telemetry", "nextHeaderType"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x0800"
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 309,
+            "column" : 24,
+            "source_fragment" : "hdr.telemetry.nextHeaderType = 0x800"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ethernet", "etherType"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x7777"
+            }
+          ],
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 310,
+            "column" : 24,
+            "source_fragment" : "hdr.ethernet.etherType = 0x7777"
+          }
+        }
+      ]
+    }
+  ],
+  "pipelines" : [
+    {
+      "name" : "ingress",
+      "id" : 0,
+      "source_info" : {
+        "filename" : "p4src/loadbalancer.p4",
+        "line" : 34,
+        "column" : 8,
+        "source_fragment" : "MyIngress"
+      },
+      "init_table" : "node_2",
+      "tables" : [
+        {
+          "name" : "tbl_loadbalancer188",
+          "id" : 0,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 188,
+            "column" : 35,
+            "source_fragment" : "= 0x7778; ..."
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [12],
+          "actions" : ["loadbalancer188"],
+          "base_default_next" : "node_4",
+          "next_tables" : {
+            "loadbalancer188" : "node_4"
+          },
+          "default_entry" : {
+            "action_id" : 12,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "MyIngress.ipv4_lpm",
+          "id" : 1,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 171,
+            "column" : 10,
+            "source_fragment" : "ipv4_lpm"
+          },
+          "key" : [
+            {
+              "match_type" : "lpm",
+              "name" : "hdr.ipv4.dstAddr",
+              "target" : ["ipv4", "dstAddr"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "lpm",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [11, 9, 4],
+          "actions" : ["MyIngress.set_nhop", "MyIngress.ecmp_group", "MyIngress.drop"],
+          "base_default_next" : "MyIngress.egress_type",
+          "next_tables" : {
+            "MyIngress.ecmp_group" : "MyIngress.ecmp_group_to_nhop",
+            "MyIngress.set_nhop" : "MyIngress.egress_type",
+            "MyIngress.drop" : "MyIngress.egress_type"
+          },
+          "default_entry" : {
+            "action_id" : 4,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "MyIngress.ecmp_group_to_nhop",
+          "id" : 2,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 159,
+            "column" : 10,
+            "source_fragment" : "ecmp_group_to_nhop"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "meta.ecmp_group_id",
+              "target" : ["scalars", "metadata._ecmp_group_id1"],
+              "mask" : null
+            },
+            {
+              "match_type" : "exact",
+              "name" : "meta.ecmp_hash",
+              "target" : ["scalars", "metadata._ecmp_hash0"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [3, 10, 2],
+          "actions" : ["MyIngress.drop", "MyIngress.set_nhop", "NoAction"],
+          "base_default_next" : "MyIngress.egress_type",
+          "next_tables" : {
+            "MyIngress.drop" : "MyIngress.egress_type",
+            "MyIngress.set_nhop" : "MyIngress.egress_type",
+            "NoAction" : "MyIngress.egress_type"
+          },
+          "default_entry" : {
+            "action_id" : 2,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "MyIngress.egress_type",
+          "id" : 3,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 51,
+            "column" : 10,
+            "source_fragment" : "egress_type"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "standard_metadata.egress_spec",
+              "target" : ["standard_metadata", "egress_spec"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [6, 0],
+          "actions" : ["MyIngress.set_type", "NoAction"],
+          "base_default_next" : "MyIngress.priority_type",
+          "next_tables" : {
+            "MyIngress.set_type" : "MyIngress.priority_type",
+            "NoAction" : "MyIngress.priority_type"
+          },
+          "default_entry" : {
+            "action_id" : 0,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "MyIngress.priority_type",
+          "id" : 4,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 77,
+            "column" : 10,
+            "source_fragment" : "priority_type"
+          },
+          "key" : [
+            {
+              "match_type" : "lpm",
+              "name" : "hdr.ipv4.srcAddr",
+              "target" : ["ipv4", "srcAddr"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "lpm",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [7, 1],
+          "actions" : ["MyIngress.set_priority", "NoAction"],
+          "base_default_next" : "node_9",
+          "next_tables" : {
+            "MyIngress.set_priority" : "node_9",
+            "NoAction" : "node_9"
+          },
+          "default_entry" : {
+            "action_id" : 1,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "tbl_get_flow_id",
+          "id" : 5,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 211,
+            "column" : 12,
+            "source_fragment" : "get_flow_id()"
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [8],
+          "actions" : ["MyIngress.get_flow_id"],
+          "base_default_next" : "tbl_drop",
+          "next_tables" : {
+            "MyIngress.get_flow_id" : "tbl_drop"
+          },
+          "default_entry" : {
+            "action_id" : 8,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "tbl_drop",
+          "id" : 6,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 212,
+            "column" : 12,
+            "source_fragment" : "drop()"
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [5],
+          "actions" : ["MyIngress.drop"],
+          "base_default_next" : null,
+          "next_tables" : {
+            "MyIngress.drop" : null
+          },
+          "default_entry" : {
+            "action_id" : 5,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        }
+      ],
+      "action_profiles" : [],
+      "conditionals" : [
+        {
+          "name" : "node_2",
+          "id" : 0,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 187,
+            "column" : 12,
+            "source_fragment" : "standard_metadata.instance_type == 4"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "field",
+                "value" : ["standard_metadata", "instance_type"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x00000004"
+              }
+            }
+          },
+          "true_next" : "tbl_loadbalancer188",
+          "false_next" : "node_4"
+        },
+        {
+          "name" : "node_4",
+          "id" : 1,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 195,
+            "column" : 12,
+            "source_fragment" : "hdr.ipv4.isValid()"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "d2b",
+              "left" : null,
+              "right" : {
+                "type" : "field",
+                "value" : ["ipv4", "$valid$"]
+              }
+            }
+          },
+          "true_next" : "MyIngress.ipv4_lpm",
+          "false_next" : "MyIngress.egress_type"
+        },
+        {
+          "name" : "node_9",
+          "id" : 2,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 210,
+            "column" : 12,
+            "source_fragment" : "standard_metadata.instance_type == 0 && hdr.ethernet.etherType == 0x7778 && meta.egress_type == 1"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "and",
+              "left" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "and",
+                  "left" : {
+                    "type" : "expression",
+                    "value" : {
+                      "op" : "==",
+                      "left" : {
+                        "type" : "field",
+                        "value" : ["standard_metadata", "instance_type"]
+                      },
+                      "right" : {
+                        "type" : "hexstr",
+                        "value" : "0x00000000"
+                      }
+                    }
+                  },
+                  "right" : {
+                    "type" : "expression",
+                    "value" : {
+                      "op" : "==",
+                      "left" : {
+                        "type" : "field",
+                        "value" : ["ethernet", "etherType"]
+                      },
+                      "right" : {
+                        "type" : "hexstr",
+                        "value" : "0x7778"
+                      }
+                    }
+                  }
+                }
+              },
+              "right" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "==",
+                  "left" : {
+                    "type" : "field",
+                    "value" : ["scalars", "metadata._egress_type2"]
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0x01"
+                  }
+                }
+              }
+            }
+          },
+          "false_next" : null,
+          "true_next" : "tbl_get_flow_id"
+        }
+      ]
+    },
+    {
+      "name" : "egress",
+      "id" : 1,
+      "source_info" : {
+        "filename" : "p4src/loadbalancer.p4",
+        "line" : 221,
+        "column" : 8,
+        "source_fragment" : "MyEgress"
+      },
+      "init_table" : "node_14",
+      "tables" : [
+        {
+          "name" : "tbl_loadbalancer250",
+          "id" : 7,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 250,
+            "column" : 12,
+            "source_fragment" : "recirculate(meta.cloned)"
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [14],
+          "actions" : ["loadbalancer250"],
+          "base_default_next" : null,
+          "next_tables" : {
+            "loadbalancer250" : null
+          },
+          "default_entry" : {
+            "action_id" : 14,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "tbl_loadbalancer266",
+          "id" : 8,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 266,
+            "column" : 53,
+            "source_fragment" : "="
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [15],
+          "actions" : ["loadbalancer266"],
+          "base_default_next" : null,
+          "next_tables" : {
+            "loadbalancer266" : null
+          },
+          "default_entry" : {
+            "action_id" : 15,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "tbl_loadbalancer272",
+          "id" : 9,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 272,
+            "column" : 24,
+            "source_fragment" : "hdr.telemetry.setInvalid(); ..."
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [18],
+          "actions" : ["loadbalancer272"],
+          "base_default_next" : "node_24",
+          "next_tables" : {
+            "loadbalancer272" : "node_24"
+          },
+          "default_entry" : {
+            "action_id" : 18,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "tbl_get_flow_timestamp",
+          "id" : 10,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 282,
+            "column" : 28,
+            "source_fragment" : "get_flow_timestamp()"
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [13],
+          "actions" : ["MyEgress.get_flow_timestamp"],
+          "base_default_next" : "node_26",
+          "next_tables" : {
+            "MyEgress.get_flow_timestamp" : "node_26"
+          },
+          "default_entry" : {
+            "action_id" : 13,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "tbl_loadbalancer286",
+          "id" : 11,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 286,
+            "column" : 32,
+            "source_fragment" : "read_timestamp.write(meta.flow_index, standard_metadata.ingress_global_timestamp); ..."
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [17],
+          "actions" : ["loadbalancer286"],
+          "base_default_next" : "node_28",
+          "next_tables" : {
+            "loadbalancer286" : "node_28"
+          },
+          "default_entry" : {
+            "action_id" : 17,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "tbl_loadbalancer295",
+          "id" : 12,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 295,
+            "column" : 40,
+            "source_fragment" : "clone3(CloneType.E2E, 100, meta)"
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [16],
+          "actions" : ["loadbalancer295"],
+          "base_default_next" : null,
+          "next_tables" : {
+            "loadbalancer295" : null
+          },
+          "default_entry" : {
+            "action_id" : 16,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        },
+        {
+          "name" : "tbl_loadbalancer307",
+          "id" : 13,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 307,
+            "column" : 24,
+            "source_fragment" : "hdr.telemetry.setValid(); ..."
+          },
+          "key" : [],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [19],
+          "actions" : ["loadbalancer307"],
+          "base_default_next" : null,
+          "next_tables" : {
+            "loadbalancer307" : null
+          },
+          "default_entry" : {
+            "action_id" : 19,
+            "action_const" : true,
+            "action_data" : [],
+            "action_entry_const" : true
+          }
+        }
+      ],
+      "action_profiles" : [],
+      "conditionals" : [
+        {
+          "name" : "node_14",
+          "id" : 3,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 248,
+            "column" : 12,
+            "source_fragment" : "standard_metadata.instance_type == 2"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "field",
+                "value" : ["standard_metadata", "instance_type"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x00000002"
+              }
+            }
+          },
+          "true_next" : "tbl_loadbalancer250",
+          "false_next" : "node_16"
+        },
+        {
+          "name" : "node_16",
+          "id" : 4,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 254,
+            "column" : 17,
+            "source_fragment" : "standard_metadata.instance_type == 0 && hdr.ethernet.etherType != 0x7778"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "and",
+              "left" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "==",
+                  "left" : {
+                    "type" : "field",
+                    "value" : ["standard_metadata", "instance_type"]
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0x00000000"
+                  }
+                }
+              },
+              "right" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "!=",
+                  "left" : {
+                    "type" : "field",
+                    "value" : ["ethernet", "etherType"]
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0x7778"
+                  }
+                }
+              }
+            }
+          },
+          "false_next" : null,
+          "true_next" : "node_17"
+        },
+        {
+          "name" : "node_17",
+          "id" : 5,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 257,
+            "column" : 16,
+            "source_fragment" : "hdr.udp.isValid()"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "d2b",
+              "left" : null,
+              "right" : {
+                "type" : "field",
+                "value" : ["udp", "$valid$"]
+              }
+            }
+          },
+          "false_next" : null,
+          "true_next" : "node_18"
+        },
+        {
+          "name" : "node_18",
+          "id" : 6,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 258,
+            "column" : 20,
+            "source_fragment" : "hdr.telemetry.isValid()"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "d2b",
+              "left" : null,
+              "right" : {
+                "type" : "field",
+                "value" : ["telemetry", "$valid$"]
+              }
+            }
+          },
+          "true_next" : "node_19",
+          "false_next" : "node_30"
+        },
+        {
+          "name" : "node_19",
+          "id" : 7,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 262,
+            "column" : 24,
+            "source_fragment" : "meta.egress_type == 2"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "field",
+                "value" : ["scalars", "metadata._egress_type2"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x02"
+              }
+            }
+          },
+          "true_next" : "node_20",
+          "false_next" : "node_22"
+        },
+        {
+          "name" : "node_20",
+          "id" : 8,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 264,
+            "column" : 28,
+            "source_fragment" : "(depth)standard_metadata.enq_qdepth > hdr.telemetry.enq_qdepth"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : ">",
+              "left" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "&",
+                  "left" : {
+                    "type" : "field",
+                    "value" : ["standard_metadata", "enq_qdepth"]
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0xffff"
+                  }
+                }
+              },
+              "right" : {
+                "type" : "field",
+                "value" : ["telemetry", "enq_qdepth"]
+              }
+            }
+          },
+          "false_next" : null,
+          "true_next" : "tbl_loadbalancer266"
+        },
+        {
+          "name" : "node_22",
+          "id" : 9,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 270,
+            "column" : 29,
+            "source_fragment" : "meta.egress_type == 1"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "field",
+                "value" : ["scalars", "metadata._egress_type2"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x01"
+              }
+            }
+          },
+          "false_next" : null,
+          "true_next" : "tbl_loadbalancer272"
+        },
+        {
+          "name" : "node_24",
+          "id" : 10,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 279,
+            "column" : 28,
+            "source_fragment" : "hdr.telemetry.enq_qdepth > 45"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : ">",
+              "left" : {
+                "type" : "field",
+                "value" : ["telemetry", "enq_qdepth"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x002d"
+              }
+            }
+          },
+          "false_next" : null,
+          "true_next" : "tbl_get_flow_timestamp"
+        },
+        {
+          "name" : "node_26",
+          "id" : 11,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 284,
+            "column" : 32,
+            "source_fragment" : "(standard_metadata.ingress_global_timestamp - meta.interval) > 750000"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : ">",
+              "left" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "&",
+                  "left" : {
+                    "type" : "expression",
+                    "value" : {
+                      "op" : "-",
+                      "left" : {
+                        "type" : "field",
+                        "value" : ["standard_metadata", "ingress_global_timestamp"]
+                      },
+                      "right" : {
+                        "type" : "field",
+                        "value" : ["scalars", "metadata._interval4"]
+                      }
+                    }
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0xffffffffffff"
+                  }
+                }
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x0000000b71b0"
+              }
+            }
+          },
+          "false_next" : null,
+          "true_next" : "tbl_loadbalancer286"
+        },
+        {
+          "name" : "node_28",
+          "id" : 12,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 291,
+            "column" : 40,
+            "source_fragment" : "probability < 33"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "<",
+              "left" : {
+                "type" : "field",
+                "value" : ["scalars", "probability_0"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x0021"
+              }
+            }
+          },
+          "false_next" : null,
+          "true_next" : "tbl_loadbalancer295"
+        },
+        {
+          "name" : "node_30",
+          "id" : 13,
+          "source_info" : {
+            "filename" : "p4src/loadbalancer.p4",
+            "line" : 306,
+            "column" : 24,
+            "source_fragment" : "meta.egress_type == 2"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "==",
+              "left" : {
+                "type" : "field",
+                "value" : ["scalars", "metadata._egress_type2"]
+              },
+              "right" : {
+                "type" : "hexstr",
+                "value" : "0x02"
+              }
+            }
+          },
+          "false_next" : null,
+          "true_next" : "tbl_loadbalancer307"
+        }
+      ]
+    }
+  ],
+  "checksums" : [
+    {
+      "name" : "cksum",
+      "id" : 0,
+      "source_info" : {
+        "filename" : "p4src/loadbalancer.p4",
+        "line" : 324,
+        "column" : 1,
+        "source_fragment" : "update_checksum( ..."
+      },
+      "target" : ["ipv4", "hdrChecksum"],
+      "type" : "generic",
+      "calculation" : "calc_3",
+      "verify" : false,
+      "update" : true,
+      "if_cond" : {
+        "type" : "expression",
+        "value" : {
+          "op" : "d2b",
+          "left" : null,
+          "right" : {
+            "type" : "field",
+            "value" : ["ipv4", "$valid$"]
+          }
+        }
+      }
+    }
+  ],
+  "force_arith" : [],
+  "extern_instances" : [],
+  "field_aliases" : [
+    [
+      "queueing_metadata.enq_timestamp",
+      ["standard_metadata", "enq_timestamp"]
+    ],
+    [
+      "queueing_metadata.enq_qdepth",
+      ["standard_metadata", "enq_qdepth"]
+    ],
+    [
+      "queueing_metadata.deq_timedelta",
+      ["standard_metadata", "deq_timedelta"]
+    ],
+    [
+      "queueing_metadata.deq_qdepth",
+      ["standard_metadata", "deq_qdepth"]
+    ],
+    [
+      "intrinsic_metadata.ingress_global_timestamp",
+      ["standard_metadata", "ingress_global_timestamp"]
+    ],
+    [
+      "intrinsic_metadata.egress_global_timestamp",
+      ["standard_metadata", "egress_global_timestamp"]
+    ],
+    [
+      "intrinsic_metadata.mcast_grp",
+      ["standard_metadata", "mcast_grp"]
+    ],
+    [
+      "intrinsic_metadata.egress_rid",
+      ["standard_metadata", "egress_rid"]
+    ],
+    [
+      "intrinsic_metadata.priority",
+      ["standard_metadata", "priority"]
+    ]
+  ],
+  "program" : "/home/p4/cs145-21-project7-dchataway/p4src/loadbalancer.p4i",
+  "__meta__" : {
+    "version" : [2, 18],
+    "compiler" : "https://github.com/p4lang/p4c"
+  }
+}
