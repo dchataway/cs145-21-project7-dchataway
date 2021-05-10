@@ -143,7 +143,7 @@
       "name" : "cloned_t",
       "source_info" : {
         "filename" : "p4src/loadbalancer.p4",
-        "line" : 250,
+        "line" : 280,
         "column" : 24,
         "source_fragment" : "meta"
       },
@@ -154,7 +154,7 @@
       "name" : "fl",
       "source_info" : {
         "filename" : "p4src/loadbalancer.p4",
-        "line" : 295,
+        "line" : 340,
         "column" : 67,
         "source_fragment" : "meta"
       },
@@ -376,7 +376,7 @@
       "id" : 1,
       "source_info" : {
         "filename" : "p4src/loadbalancer.p4",
-        "line" : 226,
+        "line" : 234,
         "column" : 28,
         "source_fragment" : "read_timestamp"
       },
@@ -502,7 +502,7 @@
       "id" : 4,
       "source_info" : {
         "filename" : "p4src/loadbalancer.p4",
-        "line" : 324,
+        "line" : 369,
         "column" : 1,
         "source_fragment" : "update_checksum( ..."
       },
@@ -700,7 +700,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 75,
+            "line" : 84,
             "column" : 8,
             "source_fragment" : "meta.priority = priority"
           }
@@ -730,7 +730,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 96,
+            "line" : 105,
             "column" : 8,
             "source_fragment" : "random(num, (bit<32>)0, (bit<32>)100000)"
           }
@@ -757,7 +757,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 99,
+            "line" : 108,
             "column" : 8,
             "source_fragment" : "hash(id, HashAlgorithm.crc16,(bit<1>)0, ..."
           }
@@ -780,7 +780,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 107,
+            "line" : 116,
             "column" : 8,
             "source_fragment" : "flow_id.write(id, num)"
           }
@@ -823,7 +823,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 119,
+            "line" : 128,
             "column" : 8,
             "source_fragment" : "hash(id, HashAlgorithm.crc16,(bit<1>)0, ..."
           }
@@ -846,7 +846,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 127,
+            "line" : 136,
             "column" : 8,
             "source_fragment" : "flow_id.read(num, id)"
           }
@@ -873,7 +873,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 130,
+            "line" : 139,
             "column" : 8,
             "source_fragment" : "hash(meta.ecmp_hash, ..."
           }
@@ -892,7 +892,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 141,
+            "line" : 150,
             "column" : 5,
             "source_fragment" : "meta.ecmp_group_id = ecmp_group_id"
           }
@@ -927,7 +927,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 147,
+            "line" : 156,
             "column" : 8,
             "source_fragment" : "hdr.ethernet.srcAddr = hdr.ethernet.dstAddr"
           }
@@ -946,7 +946,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 150,
+            "line" : 159,
             "column" : 8,
             "source_fragment" : "hdr.ethernet.dstAddr = dstAddr"
           }
@@ -965,7 +965,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 153,
+            "line" : 162,
             "column" : 8,
             "source_fragment" : "standard_metadata.egress_spec = port"
           }
@@ -1007,7 +1007,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 156,
+            "line" : 165,
             "column" : 8,
             "source_fragment" : "hdr.ipv4.ttl = hdr.ipv4.ttl - 1"
           }
@@ -1042,7 +1042,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 147,
+            "line" : 156,
             "column" : 8,
             "source_fragment" : "hdr.ethernet.srcAddr = hdr.ethernet.dstAddr"
           }
@@ -1061,7 +1061,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 150,
+            "line" : 159,
             "column" : 8,
             "source_fragment" : "hdr.ethernet.dstAddr = dstAddr"
           }
@@ -1080,7 +1080,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 153,
+            "line" : 162,
             "column" : 8,
             "source_fragment" : "standard_metadata.egress_spec = port"
           }
@@ -1122,7 +1122,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 156,
+            "line" : 165,
             "column" : 8,
             "source_fragment" : "hdr.ipv4.ttl = hdr.ipv4.ttl - 1"
           }
@@ -1130,7 +1130,7 @@
       ]
     },
     {
-      "name" : "loadbalancer188",
+      "name" : "loadbalancer197",
       "id" : 12,
       "runtime_data" : [],
       "primitives" : [
@@ -1148,7 +1148,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 188,
+            "line" : 197,
             "column" : 12,
             "source_fragment" : "hdr.ethernet.etherType = 0x7778"
           }
@@ -1167,7 +1167,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 189,
+            "line" : 198,
             "column" : 12,
             "source_fragment" : "bit<32> src_ip = hdr.ipv4.srcAddr;"
           }
@@ -1186,7 +1186,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 190,
+            "line" : 199,
             "column" : 12,
             "source_fragment" : "hdr.ipv4.srcAddr = hdr.ipv4.dstAddr"
           }
@@ -1205,7 +1205,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 191,
+            "line" : 200,
             "column" : 12,
             "source_fragment" : "hdr.ipv4.dstAddr = src_ip"
           }
@@ -1239,7 +1239,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 232,
+            "line" : 240,
             "column" : 8,
             "source_fragment" : "hash(meta.flow_index, HashAlgorithm.crc16,(bit<1>)0, ..."
           }
@@ -1262,7 +1262,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 241,
+            "line" : 249,
             "column" : 8,
             "source_fragment" : "read_timestamp.read(meta.interval, meta.flow_index)"
           }
@@ -1270,7 +1270,7 @@
       ]
     },
     {
-      "name" : "loadbalancer250",
+      "name" : "loadbalancer280",
       "id" : 14,
       "runtime_data" : [],
       "primitives" : [
@@ -1284,7 +1284,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 250,
+            "line" : 280,
             "column" : 12,
             "source_fragment" : "recirculate(meta.cloned)"
           }
@@ -1292,7 +1292,7 @@
       ]
     },
     {
-      "name" : "loadbalancer266",
+      "name" : "loadbalancer296",
       "id" : 15,
       "runtime_data" : [],
       "primitives" : [
@@ -1323,7 +1323,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 266,
+            "line" : 296,
             "column" : 28,
             "source_fragment" : "hdr.telemetry.enq_qdepth = (depth)standard_metadata.enq_qdepth"
           }
@@ -1331,7 +1331,7 @@
       ]
     },
     {
-      "name" : "loadbalancer295",
+      "name" : "loadbalancer340",
       "id" : 16,
       "runtime_data" : [],
       "primitives" : [
@@ -1349,7 +1349,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 295,
+            "line" : 340,
             "column" : 40,
             "source_fragment" : "clone3(CloneType.E2E, 100, meta)"
           }
@@ -1357,7 +1357,7 @@
       ]
     },
     {
-      "name" : "loadbalancer286",
+      "name" : "loadbalancer316",
       "id" : 17,
       "runtime_data" : [],
       "primitives" : [
@@ -1379,7 +1379,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 286,
+            "line" : 316,
             "column" : 32,
             "source_fragment" : "read_timestamp.write(meta.flow_index, standard_metadata.ingress_global_timestamp)"
           }
@@ -1402,7 +1402,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 290,
+            "line" : 336,
             "column" : 32,
             "source_fragment" : "random(probability, (bit<16>)0, (bit<16>)100)"
           }
@@ -1410,7 +1410,7 @@
       ]
     },
     {
-      "name" : "loadbalancer272",
+      "name" : "loadbalancer302",
       "id" : 18,
       "runtime_data" : [],
       "primitives" : [
@@ -1424,7 +1424,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 272,
+            "line" : 302,
             "column" : 24,
             "source_fragment" : "hdr.telemetry.setInvalid()"
           }
@@ -1443,7 +1443,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 274,
+            "line" : 304,
             "column" : 24,
             "source_fragment" : "hdr.ethernet.etherType = 0x800"
           }
@@ -1451,7 +1451,7 @@
       ]
     },
     {
-      "name" : "loadbalancer307",
+      "name" : "loadbalancer352",
       "id" : 19,
       "runtime_data" : [],
       "primitives" : [
@@ -1465,7 +1465,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 307,
+            "line" : 352,
             "column" : 24,
             "source_fragment" : "hdr.telemetry.setValid()"
           }
@@ -1497,7 +1497,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 308,
+            "line" : 353,
             "column" : 24,
             "source_fragment" : "hdr.telemetry.enq_qdepth = (depth)standard_metadata.enq_qdepth"
           }
@@ -1516,7 +1516,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 309,
+            "line" : 354,
             "column" : 24,
             "source_fragment" : "hdr.telemetry.nextHeaderType = 0x800"
           }
@@ -1535,7 +1535,7 @@
           ],
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 310,
+            "line" : 355,
             "column" : 24,
             "source_fragment" : "hdr.ethernet.etherType = 0x7777"
           }
@@ -1556,11 +1556,11 @@
       "init_table" : "node_2",
       "tables" : [
         {
-          "name" : "tbl_loadbalancer188",
+          "name" : "tbl_loadbalancer197",
           "id" : 0,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 188,
+            "line" : 197,
             "column" : 35,
             "source_fragment" : "= 0x7778; ..."
           },
@@ -1572,10 +1572,10 @@
           "support_timeout" : false,
           "direct_meters" : null,
           "action_ids" : [12],
-          "actions" : ["loadbalancer188"],
+          "actions" : ["loadbalancer197"],
           "base_default_next" : "node_4",
           "next_tables" : {
-            "loadbalancer188" : "node_4"
+            "loadbalancer197" : "node_4"
           },
           "default_entry" : {
             "action_id" : 12,
@@ -1589,7 +1589,7 @@
           "id" : 1,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 171,
+            "line" : 180,
             "column" : 10,
             "source_fragment" : "ipv4_lpm"
           },
@@ -1627,7 +1627,7 @@
           "id" : 2,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 159,
+            "line" : 168,
             "column" : 10,
             "source_fragment" : "ecmp_group_to_nhop"
           },
@@ -1708,7 +1708,7 @@
           "id" : 4,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 77,
+            "line" : 86,
             "column" : 10,
             "source_fragment" : "priority_type"
           },
@@ -1745,7 +1745,7 @@
           "id" : 5,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 211,
+            "line" : 219,
             "column" : 12,
             "source_fragment" : "get_flow_id()"
           },
@@ -1774,7 +1774,7 @@
           "id" : 6,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 212,
+            "line" : 220,
             "column" : 12,
             "source_fragment" : "drop()"
           },
@@ -1806,7 +1806,7 @@
           "id" : 0,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 187,
+            "line" : 196,
             "column" : 12,
             "source_fragment" : "standard_metadata.instance_type == 4"
           },
@@ -1824,7 +1824,7 @@
               }
             }
           },
-          "true_next" : "tbl_loadbalancer188",
+          "true_next" : "tbl_loadbalancer197",
           "false_next" : "node_4"
         },
         {
@@ -1832,7 +1832,7 @@
           "id" : 1,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 195,
+            "line" : 204,
             "column" : 12,
             "source_fragment" : "hdr.ipv4.isValid()"
           },
@@ -1855,9 +1855,9 @@
           "id" : 2,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 210,
+            "line" : 218,
             "column" : 12,
-            "source_fragment" : "standard_metadata.instance_type == 0 && hdr.ethernet.etherType == 0x7778 && meta.egress_type == 1"
+            "source_fragment" : "standard_metadata.instance_type == 0 && hdr.ethernet.etherType == 0x7778 && meta.egress_type == TYPE_EGRESS_HOST"
           },
           "expression" : {
             "type" : "expression",
@@ -1923,18 +1923,18 @@
       "id" : 1,
       "source_info" : {
         "filename" : "p4src/loadbalancer.p4",
-        "line" : 221,
+        "line" : 229,
         "column" : 8,
         "source_fragment" : "MyEgress"
       },
       "init_table" : "node_14",
       "tables" : [
         {
-          "name" : "tbl_loadbalancer250",
+          "name" : "tbl_loadbalancer280",
           "id" : 7,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 250,
+            "line" : 280,
             "column" : 12,
             "source_fragment" : "recirculate(meta.cloned)"
           },
@@ -1946,10 +1946,10 @@
           "support_timeout" : false,
           "direct_meters" : null,
           "action_ids" : [14],
-          "actions" : ["loadbalancer250"],
+          "actions" : ["loadbalancer280"],
           "base_default_next" : null,
           "next_tables" : {
-            "loadbalancer250" : null
+            "loadbalancer280" : null
           },
           "default_entry" : {
             "action_id" : 14,
@@ -1959,11 +1959,11 @@
           }
         },
         {
-          "name" : "tbl_loadbalancer266",
+          "name" : "tbl_loadbalancer296",
           "id" : 8,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 266,
+            "line" : 296,
             "column" : 53,
             "source_fragment" : "="
           },
@@ -1975,10 +1975,10 @@
           "support_timeout" : false,
           "direct_meters" : null,
           "action_ids" : [15],
-          "actions" : ["loadbalancer266"],
+          "actions" : ["loadbalancer296"],
           "base_default_next" : null,
           "next_tables" : {
-            "loadbalancer266" : null
+            "loadbalancer296" : null
           },
           "default_entry" : {
             "action_id" : 15,
@@ -1988,11 +1988,11 @@
           }
         },
         {
-          "name" : "tbl_loadbalancer272",
+          "name" : "tbl_loadbalancer302",
           "id" : 9,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 272,
+            "line" : 302,
             "column" : 24,
             "source_fragment" : "hdr.telemetry.setInvalid(); ..."
           },
@@ -2004,10 +2004,10 @@
           "support_timeout" : false,
           "direct_meters" : null,
           "action_ids" : [18],
-          "actions" : ["loadbalancer272"],
+          "actions" : ["loadbalancer302"],
           "base_default_next" : "node_24",
           "next_tables" : {
-            "loadbalancer272" : "node_24"
+            "loadbalancer302" : "node_24"
           },
           "default_entry" : {
             "action_id" : 18,
@@ -2021,7 +2021,7 @@
           "id" : 10,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 282,
+            "line" : 312,
             "column" : 28,
             "source_fragment" : "get_flow_timestamp()"
           },
@@ -2046,11 +2046,11 @@
           }
         },
         {
-          "name" : "tbl_loadbalancer286",
+          "name" : "tbl_loadbalancer316",
           "id" : 11,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 286,
+            "line" : 316,
             "column" : 32,
             "source_fragment" : "read_timestamp.write(meta.flow_index, standard_metadata.ingress_global_timestamp); ..."
           },
@@ -2062,10 +2062,10 @@
           "support_timeout" : false,
           "direct_meters" : null,
           "action_ids" : [17],
-          "actions" : ["loadbalancer286"],
+          "actions" : ["loadbalancer316"],
           "base_default_next" : "node_28",
           "next_tables" : {
-            "loadbalancer286" : "node_28"
+            "loadbalancer316" : "node_28"
           },
           "default_entry" : {
             "action_id" : 17,
@@ -2075,11 +2075,11 @@
           }
         },
         {
-          "name" : "tbl_loadbalancer295",
+          "name" : "tbl_loadbalancer340",
           "id" : 12,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 295,
+            "line" : 340,
             "column" : 40,
             "source_fragment" : "clone3(CloneType.E2E, 100, meta)"
           },
@@ -2091,10 +2091,10 @@
           "support_timeout" : false,
           "direct_meters" : null,
           "action_ids" : [16],
-          "actions" : ["loadbalancer295"],
+          "actions" : ["loadbalancer340"],
           "base_default_next" : null,
           "next_tables" : {
-            "loadbalancer295" : null
+            "loadbalancer340" : null
           },
           "default_entry" : {
             "action_id" : 16,
@@ -2104,11 +2104,11 @@
           }
         },
         {
-          "name" : "tbl_loadbalancer307",
+          "name" : "tbl_loadbalancer352",
           "id" : 13,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 307,
+            "line" : 352,
             "column" : 24,
             "source_fragment" : "hdr.telemetry.setValid(); ..."
           },
@@ -2120,10 +2120,10 @@
           "support_timeout" : false,
           "direct_meters" : null,
           "action_ids" : [19],
-          "actions" : ["loadbalancer307"],
+          "actions" : ["loadbalancer352"],
           "base_default_next" : null,
           "next_tables" : {
-            "loadbalancer307" : null
+            "loadbalancer352" : null
           },
           "default_entry" : {
             "action_id" : 19,
@@ -2140,7 +2140,7 @@
           "id" : 3,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 248,
+            "line" : 278,
             "column" : 12,
             "source_fragment" : "standard_metadata.instance_type == 2"
           },
@@ -2158,7 +2158,7 @@
               }
             }
           },
-          "true_next" : "tbl_loadbalancer250",
+          "true_next" : "tbl_loadbalancer280",
           "false_next" : "node_16"
         },
         {
@@ -2166,7 +2166,7 @@
           "id" : 4,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 254,
+            "line" : 284,
             "column" : 17,
             "source_fragment" : "standard_metadata.instance_type == 0 && hdr.ethernet.etherType != 0x7778"
           },
@@ -2212,7 +2212,7 @@
           "id" : 5,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 257,
+            "line" : 287,
             "column" : 16,
             "source_fragment" : "hdr.udp.isValid()"
           },
@@ -2235,7 +2235,7 @@
           "id" : 6,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 258,
+            "line" : 288,
             "column" : 20,
             "source_fragment" : "hdr.telemetry.isValid()"
           },
@@ -2258,9 +2258,9 @@
           "id" : 7,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 262,
+            "line" : 292,
             "column" : 24,
-            "source_fragment" : "meta.egress_type == 2"
+            "source_fragment" : "meta.egress_type == TYPE_EGRESS_SWITCH"
           },
           "expression" : {
             "type" : "expression",
@@ -2284,7 +2284,7 @@
           "id" : 8,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 264,
+            "line" : 294,
             "column" : 28,
             "source_fragment" : "(depth)standard_metadata.enq_qdepth > hdr.telemetry.enq_qdepth"
           },
@@ -2313,16 +2313,16 @@
             }
           },
           "false_next" : null,
-          "true_next" : "tbl_loadbalancer266"
+          "true_next" : "tbl_loadbalancer296"
         },
         {
           "name" : "node_22",
           "id" : 9,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 270,
+            "line" : 300,
             "column" : 29,
-            "source_fragment" : "meta.egress_type == 1"
+            "source_fragment" : "meta.egress_type == TYPE_EGRESS_HOST"
           },
           "expression" : {
             "type" : "expression",
@@ -2339,14 +2339,14 @@
             }
           },
           "false_next" : null,
-          "true_next" : "tbl_loadbalancer272"
+          "true_next" : "tbl_loadbalancer302"
         },
         {
           "name" : "node_24",
           "id" : 10,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 279,
+            "line" : 309,
             "column" : 28,
             "source_fragment" : "hdr.telemetry.enq_qdepth > 45"
           },
@@ -2372,7 +2372,7 @@
           "id" : 11,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 284,
+            "line" : 314,
             "column" : 32,
             "source_fragment" : "(standard_metadata.ingress_global_timestamp - meta.interval) > 750000"
           },
@@ -2411,16 +2411,16 @@
             }
           },
           "false_next" : null,
-          "true_next" : "tbl_loadbalancer286"
+          "true_next" : "tbl_loadbalancer316"
         },
         {
           "name" : "node_28",
           "id" : 12,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 291,
+            "line" : 337,
             "column" : 40,
-            "source_fragment" : "probability < 33"
+            "source_fragment" : "probability < threshold"
           },
           "expression" : {
             "type" : "expression",
@@ -2437,16 +2437,16 @@
             }
           },
           "false_next" : null,
-          "true_next" : "tbl_loadbalancer295"
+          "true_next" : "tbl_loadbalancer340"
         },
         {
           "name" : "node_30",
           "id" : 13,
           "source_info" : {
             "filename" : "p4src/loadbalancer.p4",
-            "line" : 306,
+            "line" : 351,
             "column" : 24,
-            "source_fragment" : "meta.egress_type == 2"
+            "source_fragment" : "meta.egress_type == TYPE_EGRESS_SWITCH"
           },
           "expression" : {
             "type" : "expression",
@@ -2463,7 +2463,7 @@
             }
           },
           "false_next" : null,
-          "true_next" : "tbl_loadbalancer307"
+          "true_next" : "tbl_loadbalancer352"
         }
       ]
     }
@@ -2474,7 +2474,7 @@
       "id" : 0,
       "source_info" : {
         "filename" : "p4src/loadbalancer.p4",
-        "line" : 324,
+        "line" : 369,
         "column" : 1,
         "source_fragment" : "update_checksum( ..."
       },

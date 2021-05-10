@@ -33,20 +33,34 @@ class RoutingController(object):
 
         # loops through all switches
         for sw_name, controller in self.controllers.items():
+
             # gets the interface and node type
             for interface, node in self.topo.get_interfaces_to_node(sw_name).items():
+
                 node_type = self.topo.get_node_type(node)
                 port_number = self.topo.interface_to_port(sw_name, interface)
 
                 # numerates the node types to be put in the table
                 if node_type == 'host':
                     node_type_num = 1
+
+                    # NEW - CODE TO SET PRIORITY BASED ON HOST NUMBER
+                    host_ip = self.topo.get_host_ip(node) + "/24"
+                    priority_num = 2
+                    if str(node) == 'h1':
+                        priority_num = 1
+                    elif str(node) == 'h4':
+                        priority_num = 3
+                    print "Node name: {}, ip address: {}, priority: {}".format(str(node), str(host_ip), str(priority_num))
+                    self.controllers[sw_name].table_add("priority_type", "set_priority", [str(host_ip)], [str(priority_num)])
+
+
                 elif node_type == 'switch':
                     node_type_num = 2
 
                 # fills the table
                 self.controllers[sw_name].table_add("egress_type", "set_type", [str(port_number)], [str(node_type_num)])
-
+    '''
     def set_priority_table(self):
         # NEW - SETS THE PRIORITY BASED ON THE HOST NUMBER
         # Function outside of route() that sets the priority table
@@ -54,10 +68,9 @@ class RoutingController(object):
         # loops through all switches
         for sw_name, controller in self.controllers.items():
 
-            # gets the node type
-            node_type = self.topo.get_node_type(node)
-
+            # default priority number
             priority_num = 2
+
             # numerates the node types to be put in the table
             if node_type == 'host':
                 host_ip = self.topo.get_host_ip(sw_name) + "/24"
@@ -69,7 +82,7 @@ class RoutingController(object):
 
             # fills the table
             self.controllers[sw_name].table_add("priority_type", "set_priority", [str(host_ip)], [str(priority_num)])
-
+    '''
 
     def add_mirroring_ids(self):
 
@@ -82,7 +95,6 @@ class RoutingController(object):
         switch_ecmp_groups = {sw_name:{} for sw_name in self.topo.get_p4switches().keys()}
 
         for sw_name, controller in self.controllers.items():
-            print "Switch name {}:, ip address {}:".format(sw_name, str(host_ip))
 
             for sw_dst in self.topo.get_p4switches():
 
@@ -150,7 +162,7 @@ class RoutingController(object):
 
     def main(self):
         self.set_egress_type_table()
-        self.set_priority_table()
+        #self.set_priority_table()
         self.add_mirroring_ids()
         self.route()
 

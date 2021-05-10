@@ -61,17 +61,26 @@ control MyIngress(inout headers hdr,
     }
 
     /********** NEW CODE *******/
-    // NEW - SETS PRIORITY IN METADATA
+    //register<bit<4>>(REGISTER_SIZE) flow_priority;
+
+    // NEW - SETS PRIORITY IN METADATA AND IN REGISTER
     action set_priority(bit<4> priority) {
-        /*        
-        if (hdr.ipv4.srcAddr == str(10.1.1.2))
-        {
-           meta.priority = 1;         
-        }
-        else {
-           meta.priority = 2;         
-        }
+        /*
+        // Write the flow_priority of a particular flow
+        bit<32> id;
+  
+        hash(id, HashAlgorithm.crc16,(bit<1>)0,
+        { hdr.ipv4.srcAddr, 
+          hdr.ipv4.dstAddr, 
+          hdr.udp.srcPort, //tcp
+          hdr.udp.dstPort, // tcp
+          hdr.ipv4.protocol}, 
+        (bit<12>)REGISTER_SIZE); 
+        // update
+        flow_priority.write(id, priority);
         */
+
+        // store in meta data
         meta.priority = priority;
     }
     table priority_type {
@@ -204,10 +213,9 @@ control MyIngress(inout headers hdr,
         egress_type.apply();
         // NEW CODE TO APPLY TABLE FOR PRIORITY
         priority_type.apply();
-        //set_priority();
 
         // NEW: if sending to a host (type = 1), and it is a notification packet
-        if (standard_metadata.instance_type == PKT_INSTANCE_TYPE_NORMAL && hdr.ethernet.etherType == 0x7778 && meta.egress_type == 1){
+        if (standard_metadata.instance_type == PKT_INSTANCE_TYPE_NORMAL && hdr.ethernet.etherType == 0x7778 && meta.egress_type == TYPE_EGRESS_HOST){
             get_flow_id(); 
             drop(); //drop it
         }
@@ -242,12 +250,34 @@ control MyEgress(inout headers hdr,
     }
 
 
+    /* NEW CODE FOR PRIORITY APPLICATION */
+    /*
+    action get_flow_priority(){
+
+        bit<32> id;
+
+        // Use to get the flow_id      
+        hash(id, HashAlgorithm.crc16,(bit<1>)0,
+        { hdr.ipv4.srcAddr, //normal source and destination IPs
+          hdr.ipv4.dstAddr, 
+          hdr.udp.srcPort, //tcp
+          hdr.udp.dstPort, //tcp
+          hdr.ipv4.protocol}, 
+        (bit<12>)REGISTER_SIZE);
+
+        // read priority num
+        flow_priority.read(meta.priority, id);
+
+    }
+    */
+
     apply {
+
 
         // FIRST CHECK IF IT IS A CLONED PACKET
         if (standard_metadata.instance_type == PKT_INSTANCE_TYPE_EGRESS_CLONE) {
             // then recirculate
-            recirculate(meta.cloned);
+            recirculate(meta.cloned); //not {}?
         }
 
 
@@ -259,7 +289,7 @@ control MyEgress(inout headers hdr,
                     // Then there is a telemetry header
 
                     // If the next hop is a switch (type = 2)
-                    if (meta.egress_type == 2) {
+                    if (meta.egress_type == TYPE_EGRESS_SWITCH) {
                         // update if bigger than the current one
                         if ((depth)standard_metadata.enq_qdepth > hdr.telemetry.enq_qdepth) {
                             // set the depth field
@@ -267,13 +297,13 @@ control MyEgress(inout headers hdr,
                         }
                     }
                     // if the next hop is a host
-                    else if (meta.egress_type == 1){ 
+                    else if (meta.egress_type == TYPE_EGRESS_HOST){ 
                         // Remove the telemetry header
                         hdr.telemetry.setInvalid();
                         // Set etherType to type IPV4
                         hdr.ethernet.etherType = 0x800;
 
-                        // NEW - sending notification/feedback that flow is experiencing congestion:
+                        // NEW CODE FOR PROJECT 7- sending notification/feedback that flow is experiencing congestion:
                         // Extend to clone packet and send as feedback to the ingress switch
                         // Condition 1) check if the received queue depth is above a threshold
                         if (hdr.telemetry.enq_qdepth > 45){
@@ -285,12 +315,27 @@ control MyEgress(inout headers hdr,
                                 // write to the register similar to project 5
                                 read_timestamp.write(meta.flow_index, standard_metadata.ingress_global_timestamp);
 
-                                // Condition 3) only move a certain % of them (33%)
+                                // Condition 3) only move a certain % of them (DEPENDING ON PRIORITY)
+
                                 bit<16> probability;
+                                bit<16> threshold;
+
+                                // CODE THAT SETS PROBABILITY THRESHOLD BASED ON PRIORITY
+                                if (meta.priority == TYPE_PRIORITY_HIGH) {
+                                    threshold = 10; //originally 10
+                                }
+                                else if (meta.priority == TYPE_PRIORITY_LOW) {
+                                    threshold = 90; //originally 90
+                                }
+                                else {
+                                    threshold = 90;
+                                }
+                                
+                                threshold = 33; //even threshold - used if code block above is commented out
+
                                 random(probability, (bit<16>)0, (bit<16>)100);
-                                    if (probability < 33) {
+                                    if (probability < threshold) {
                                         // Then clone the packet
-                                        // Uncertain - does the 100 argument refer to the added mirroring id?
                                         // following this code here: http://csie.nqu.edu.tw/smallko/sdn/p4utils_sendtocpu.htm
                                         clone3(CloneType.E2E, 100, meta); // NOTE - DO YOU USE JUST THE META OBJECT OR META.CLONED????
                                     } 
@@ -303,7 +348,7 @@ control MyEgress(inout headers hdr,
                     // Then there isn't a telemetry header
 
                     // if the next hop is a switch (type = 2)
-                    if (meta.egress_type == 2) {
+                    if (meta.egress_type == TYPE_EGRESS_SWITCH) {
                         hdr.telemetry.setValid();
                         hdr.telemetry.enq_qdepth = (depth)standard_metadata.enq_qdepth;
                         hdr.telemetry.nextHeaderType = 0x800;
