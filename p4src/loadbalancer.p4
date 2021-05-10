@@ -306,7 +306,21 @@ control MyEgress(inout headers hdr,
                         // NEW CODE FOR PROJECT 7- sending notification/feedback that flow is experiencing congestion:
                         // Extend to clone packet and send as feedback to the ingress switch
                         // Condition 1) check if the received queue depth is above a threshold
-                        if (hdr.telemetry.enq_qdepth > 45){
+
+                        bit<16> queue_threshold;
+                         // CODE THAT SETS QUEUE THRESHOLD BASED ON PRIORITY
+                        if (meta.priority == TYPE_PRIORITY_HIGH) {
+                            queue_threshold = 50; //originally 45
+                        }
+                        else if (meta.priority == TYPE_PRIORITY_LOW) {
+                            queue_threshold = 35; //originally 45
+                        }
+                        else {
+                            queue_threshold = 45;
+                        }
+                                                      
+
+                        if (hdr.telemetry.enq_qdepth > queue_threshold){
 
                             // Condition 2) check time difference in order to see the flow is different
                             get_flow_timestamp();
@@ -331,7 +345,7 @@ control MyEgress(inout headers hdr,
                                     threshold = 90;
                                 }
                                 
-                                threshold = 33; //even threshold - used if code block above is commented out
+                                // threshold = 33; //even threshold - used if code block above is commented out
 
                                 random(probability, (bit<16>)0, (bit<16>)100);
                                     if (probability < threshold) {
