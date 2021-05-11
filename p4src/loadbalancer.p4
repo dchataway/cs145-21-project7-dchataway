@@ -18,6 +18,10 @@ typedef bit<16>  depth; // used to type cast later
 #define PKT_INSTANCE_TYPE_REPLICATION 5
 #define PKT_INSTANCE_TYPE_RESUBMIT 6
 
+// DEMO OPTIONS
+#define PRIORITY_APPLY_SRC 0
+#define PRIORITY_APPLY_DST 0
+
 
 /*************************************************************************
 ************   C H E C K S U M    V E R I F I C A T I O N   *************
@@ -61,25 +65,8 @@ control MyIngress(inout headers hdr,
     }
 
     /********** NEW CODE *******/
-    //register<bit<4>>(REGISTER_SIZE) flow_priority;
-
     // NEW - SETS PRIORITY IN METADATA AND IN REGISTER
     action set_priority(bit<4> priority) {
-        /*
-        // Write the flow_priority of a particular flow
-        bit<32> id;
-  
-        hash(id, HashAlgorithm.crc16,(bit<1>)0,
-        { hdr.ipv4.srcAddr, 
-          hdr.ipv4.dstAddr, 
-          hdr.udp.srcPort, //tcp
-          hdr.udp.dstPort, // tcp
-          hdr.ipv4.protocol}, 
-        (bit<12>)REGISTER_SIZE); 
-        // update
-        flow_priority.write(id, priority);
-        */
-
         // store in meta data
         meta.priority = priority;
     }
@@ -250,34 +237,13 @@ control MyEgress(inout headers hdr,
     }
 
 
-    /* NEW CODE FOR PRIORITY APPLICATION */
-    /*
-    action get_flow_priority(){
-
-        bit<32> id;
-
-        // Use to get the flow_id      
-        hash(id, HashAlgorithm.crc16,(bit<1>)0,
-        { hdr.ipv4.srcAddr, //normal source and destination IPs
-          hdr.ipv4.dstAddr, 
-          hdr.udp.srcPort, //tcp
-          hdr.udp.dstPort, //tcp
-          hdr.ipv4.protocol}, 
-        (bit<12>)REGISTER_SIZE);
-
-        // read priority num
-        flow_priority.read(meta.priority, id);
-
-    }
-    */
-
     apply {
 
 
         // FIRST CHECK IF IT IS A CLONED PACKET
         if (standard_metadata.instance_type == PKT_INSTANCE_TYPE_EGRESS_CLONE) {
             // then recirculate
-            recirculate(meta.cloned); //not {}?
+            recirculate({}); //not {}? // meta.cloned
         }
 
 
@@ -308,16 +274,23 @@ control MyEgress(inout headers hdr,
                         // Condition 1) check if the received queue depth is above a threshold
 
                         bit<16> queue_threshold;
-                         // CODE THAT SETS QUEUE THRESHOLD BASED ON PRIORITY
-                        if (meta.priority == TYPE_PRIORITY_HIGH) {
-                            queue_threshold = 50; //originally 45
-                        }
-                        else if (meta.priority == TYPE_PRIORITY_LOW) {
-                            queue_threshold = 35; //originally 45
+
+                        if (PRIORITY_APPLY_SRC == 1) {
+                             // CODE THAT SETS QUEUE THRESHOLD BASED ON PRIORITY
+                            if (meta.priority == TYPE_PRIORITY_HIGH) {
+                                queue_threshold = 60; 
+                            }
+                            else if (meta.priority == TYPE_PRIORITY_LOW) {
+                                queue_threshold = 35; 
+                            }
+                            else {
+                                queue_threshold = 50;
+                            }   
                         }
                         else {
                             queue_threshold = 45;
                         }
+
                                                       
 
                         if (hdr.telemetry.enq_qdepth > queue_threshold){
@@ -333,20 +306,24 @@ control MyEgress(inout headers hdr,
 
                                 bit<16> probability;
                                 bit<16> threshold;
-
-                                // CODE THAT SETS PROBABILITY THRESHOLD BASED ON PRIORITY
-                                if (meta.priority == TYPE_PRIORITY_HIGH) {
-                                    threshold = 10; //originally 10
-                                }
-                                else if (meta.priority == TYPE_PRIORITY_LOW) {
-                                    threshold = 90; //originally 90
+                                
+                                if (PRIORITY_APPLY_SRC == 1) {
+                                    // CODE THAT SETS PROBABILITY THRESHOLD BASED ON PRIORITY
+                                    if (meta.priority == TYPE_PRIORITY_HIGH) {
+                                        threshold = 10; //originally 10
+                                    }
+                                    else if (meta.priority == TYPE_PRIORITY_LOW) {
+                                        threshold = 90; //originally 90
+                                    }
+                                    else {
+                                        threshold = 50;
+                                    }
                                 }
                                 else {
-                                    threshold = 90;
+                                    threshold = 33;
                                 }
-                                
-                                // threshold = 33; //even threshold - used if code block above is commented out
 
+                                
                                 random(probability, (bit<16>)0, (bit<16>)100);
                                     if (probability < threshold) {
                                         // Then clone the packet

@@ -27,7 +27,7 @@ class RoutingController(object):
             controller.table_set_default("ipv4_lpm", "drop", [])
             controller.table_set_default("ecmp_group_to_nhop", "drop", [])
 
-    def set_egress_type_table(self):
+    def set_tables(self):
         # From project 6
         # Function outside of route() that sets the egress type table
 
@@ -51,8 +51,13 @@ class RoutingController(object):
                         priority_num = 1
                     elif str(node) == 'h4':
                         priority_num = 3
+                    elif str(node) == 'h5':
+                        priority_num = 1
+                    elif str(node) == 'h8':
+                        priority_num = 3                     
                     print "Node name: {}, ip address: {}, priority: {}".format(str(node), str(host_ip), str(priority_num))
                     self.controllers[sw_name].table_add("priority_type", "set_priority", [str(host_ip)], [str(priority_num)])
+
 
 
                 elif node_type == 'switch':
@@ -60,29 +65,7 @@ class RoutingController(object):
 
                 # fills the table
                 self.controllers[sw_name].table_add("egress_type", "set_type", [str(port_number)], [str(node_type_num)])
-    '''
-    def set_priority_table(self):
-        # NEW - SETS THE PRIORITY BASED ON THE HOST NUMBER
-        # Function outside of route() that sets the priority table
 
-        # loops through all switches
-        for sw_name, controller in self.controllers.items():
-
-            # default priority number
-            priority_num = 2
-
-            # numerates the node types to be put in the table
-            if node_type == 'host':
-                host_ip = self.topo.get_host_ip(sw_name) + "/24"
-                priority_num = 1
-            elif node_type == 'switch':
-                pass
-
-            print "Switch name {}:, ip address {}:".format(sw_name, str(host_ip))
-
-            # fills the table
-            self.controllers[sw_name].table_add("priority_type", "set_priority", [str(host_ip)], [str(priority_num)])
-    '''
 
     def add_mirroring_ids(self):
 
@@ -161,8 +144,7 @@ class RoutingController(object):
 
 
     def main(self):
-        self.set_egress_type_table()
-        #self.set_priority_table()
+        self.set_tables()
         self.add_mirroring_ids()
         self.route()
 
