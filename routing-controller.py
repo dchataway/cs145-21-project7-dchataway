@@ -13,6 +13,15 @@ class RoutingController(object):
         self.connect_to_switches()
         self.reset_states()
         self.set_table_defaults()
+        '''
+        OPTIONS FOR DEMO
+        '''
+        self.apply_src_priority = True
+        self.apply_dst_priority = False
+        self.src_high_priority = 'h1'
+        self.src_low_priority = 'h4'
+        self.dst_high_priority = 'h5'
+        self.dst_low_priority = 'h8'
 
     def reset_states(self):
         [controller.reset_state() for controller in self.controllers.values()]
@@ -47,18 +56,17 @@ class RoutingController(object):
                     # NEW - CODE TO SET PRIORITY BASED ON HOST NUMBER
                     host_ip = self.topo.get_host_ip(node) + "/24"
                     priority_num = 2
-                    if str(node) == 'h1':
+                    if str(node) == self.src_high_priority and self.apply_src_priority:
                         priority_num = 1
-                    elif str(node) == 'h4':
+                    elif str(node) == self.src_low_priority and self.apply_src_priority:
                         priority_num = 3
-                    elif str(node) == 'h5':
+                    elif str(node) == self.dst_high_priority and self.apply_dst_priority:
                         priority_num = 1
-                    elif str(node) == 'h8':
+                    elif str(node) == self.dst_low_priority and self.apply_dst_priority:
                         priority_num = 3                     
                     print "Node name: {}, ip address: {}, priority: {}".format(str(node), str(host_ip), str(priority_num))
                     self.controllers[sw_name].table_add("priority_type", "set_priority", [str(host_ip)], [str(priority_num)])
-
-
+                    self.controllers[sw_name].table_add("priority_type_dst", "set_priority", [str(host_ip)], [str(priority_num)])
 
                 elif node_type == 'switch':
                     node_type_num = 2

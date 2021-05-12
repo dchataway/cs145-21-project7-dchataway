@@ -19,9 +19,8 @@ typedef bit<16>  depth; // used to type cast later
 #define PKT_INSTANCE_TYPE_RESUBMIT 6
 
 // DEMO OPTIONS
-#define PRIORITY_APPLY_SRC 0
-#define PRIORITY_APPLY_DST 0
-
+#define PRIORITY_APPLY 1
+#define DST_PRIORITY_APPLY 0
 
 /*************************************************************************
 ************   C H E C K S U M    V E R I F I C A T I O N   *************
@@ -81,7 +80,17 @@ control MyIngress(inout headers hdr,
         size = 1024;
         default_action = NoAction;
     }
-
+    table priority_type_dst {
+        key = {
+            hdr.ipv4.dstAddr: lpm;
+        }
+        actions = {
+            set_priority;
+            NoAction;
+        }
+        size = 1024;
+        default_action = NoAction;
+    }
 
     // From project 6 - Similar to Pset 5:
     // hash based on the 5 tuple, get the flowlet_id from a register and then update random number
@@ -198,8 +207,11 @@ control MyIngress(inout headers hdr,
 
         // From project 6 apply the table at the ingress control after the other actions are applied
         egress_type.apply();
-        // NEW CODE TO APPLY TABLE FOR PRIORITY
+        // NEW CODE TO APPLY TABLES FOR PRIORITY
         priority_type.apply();
+        if (DST_PRIORITY_APPLY == 1) {
+            priority_type_dst.apply();    
+        }   
 
         // NEW: if sending to a host (type = 1), and it is a notification packet
         if (standard_metadata.instance_type == PKT_INSTANCE_TYPE_NORMAL && hdr.ethernet.etherType == 0x7778 && meta.egress_type == TYPE_EGRESS_HOST){
@@ -275,7 +287,7 @@ control MyEgress(inout headers hdr,
 
                         bit<16> queue_threshold;
 
-                        if (PRIORITY_APPLY_SRC == 1) {
+                        if (PRIORITY_APPLY == 1) {
                              // CODE THAT SETS QUEUE THRESHOLD BASED ON PRIORITY
                             if (meta.priority == TYPE_PRIORITY_HIGH) {
                                 queue_threshold = 60; 
@@ -307,7 +319,7 @@ control MyEgress(inout headers hdr,
                                 bit<16> probability;
                                 bit<16> threshold;
                                 
-                                if (PRIORITY_APPLY_SRC == 1) {
+                                if (PRIORITY_APPLY == 1) {
                                     // CODE THAT SETS PROBABILITY THRESHOLD BASED ON PRIORITY
                                     if (meta.priority == TYPE_PRIORITY_HIGH) {
                                         threshold = 10; //originally 10

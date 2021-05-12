@@ -12,6 +12,8 @@ Yang and Mason helped guide the project. Also I asked a few questions on Ed.
 - The advantage of CONGA is that it is distributed and can dynamically detect and react to congestion in the flow in order to improve load balancing, especially with flows of varied size. The disadvantage is that packet reordering may occur (since typical CONGA load balances on a packet or flowlet level) and it does not scale well to "large multi-tier networks" because of its 2-way "leaf-to-leaf" sharing feedback mechanism between nodes.
 
 ### Design
+As described by Edgar Costa: We will try to avoid congestion using a very simple technique: every time an egress (switch before the destination host) detects that a packet experienced congestion it will send a notification message to the ingress switch, which upon receiving it will randomly move the flow to another path. 
+
 In contrast, the new CONGA implementation in this project randomly re-hashes flows that are congested based on certain conditions. The conditions defining "congestion" in my implementation are as follows:
 1. The flow's queued packet depth (carried in the `telemetry` header) is greater than 45;
 2. The incoming packet has a timestamp greater than a timeout threshold of 0.75 s per flow;
@@ -91,7 +93,40 @@ I expected h1 to have much higher average throughput than h4, but this isn't the
 Yang [posted in Ed](https://edstem.org/us/courses/3092/discussion/431758): Maybe you would need more powerful VM (with more cores) for mininet simulation to see the difference, or try to scale down the link bandwidth. 
 
 ### Testing
+Testing can be done on the topology from project 6 as follows:
 
+1. Start the medium size topology:
+
+   ```bash
+   sudo p4run --config topology/p4app-medium.json
+   ```
+
+2. Open a `tmux` terminal by typing `tmux` (or if you are already using `tmux`, open another window and type `tmux`). And run monitoring script (`nload_tmux_medium.sh`). This script, will use `tmux` to create a window
+with 4 panes, in each pane it will lunch a `nload` session with a different interface (from `s1-eth1` to `s1-eth4`), which are the interfaces directly connected to `h1-h4`.
+
+   ```bash
+   tmux
+   ./nload_tmux_medium.sh
+   ```
+Or if you want to launch a `nload` session on s6 (from `s6-eth1` to `s6-eth4`), which are the interfaces directly connected to `h5-h8`:
+   ```bash
+   tmux
+   ./nload_tmux_medium_s6.sh
+   ```
+
+3. Send traffic from `h1-h4` to `h5-h8`. There is a script that will do that for you automatically. It will run 1 flow from each host:
+
+   ```bash
+   sudo python send_traffic_onetoone.py 1000
+   ```
+Note that it can take quite a long time for the flows to converge - it can take as many as ten minutes in some cases.
+
+4. If you want to send 4 different flows, you can just run the command again, it will first stop all the `iperf` sessions, alternatively, if you want
+to stop the flow generation you can kill them:
+
+   ```bash
+   sudo killall iperf
+   ```
 
 ### Results and Performance Analysis 
 
