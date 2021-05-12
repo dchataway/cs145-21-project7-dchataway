@@ -9,7 +9,9 @@ Yang and Mason helped guide the project. Also I asked a few questions on Ed.
 
 ## Report
 ### Goal
-- The advantage of CONGA is that it is distributed and can dynamically detect and react to congestion in the flow in order to improve load balancing, especially with flows of varied size. The disadvantage is that packet reordering may occur (since typical CONGA load balances on a packet or flowlet level) and it does not scale well to "large multi-tier networks" because of its 2-way "leaf-to-leaf" sharing feedback mechanism between nodes.
+The goal of this project was to design (what I call) "priority"-based CONGA load balancing, whereby certain flows are given priority over others. Then, those flows with priority would react less to congestion in the flow (whereas the other flows with lower priority would be more likely to shift routes) in order to maintain a stable flow and hopefully more traffic throughput. In other words, the "low priority" flows would "get out of the way" of the "high priority" flows. 
+
+Furthermore, a goal of this project was to implement this mechanism with CONGA in the control plane so that the load balancing could continue to be done on a distributed basis and the priority logic would be implemented only by a single controller. 
 
 ### Design
 As described by Edgar Costa: We will try to avoid congestion using a very simple technique: every time an egress (switch before the destination host) detects that a packet experienced congestion it will send a notification message to the ingress switch, which upon receiving it will randomly move the flow to another path. 
@@ -88,12 +90,18 @@ The controller sets the specific priority numbers: 1 for h1, 3 for h4 and 2 for 
 
 
 ### Challenges
-I expected h1 to have much higher average throughput than h4, but this isn't the case. h4 always has very high throughput.
 
-Yang [posted in Ed](https://edstem.org/us/courses/3092/discussion/431758): Maybe you would need more powerful VM (with more cores) for mininet simulation to see the difference, or try to scale down the link bandwidth. 
+I expected that in the base case, the CONGA implementation from Project 6 would have equal output across h1 to h4. 
+
+However that isn't the case: when running `sudo python send_traffic_onetoone.py 1000`, h4 always seems to have much higher average output than the other hosts (followed by h2 and h3 and then h1 last). When analysing `send_traffic_onetoone.py`, nothing seemed to suggest that h4 had a designed greater traffic output. In response to this [query in Ed](https://edstem.org/us/courses/3092/discussion/431758), Yang replied: "Maybe you would need more powerful VM (with more cores) for mininet simulation to see the difference, or try to scale down the link bandwidth." While I was unable to test with more cores, I did scale down the link bandwidth, which did appear to help accentuate the congestion performance difference. Specifically, at link bandwidths of 5 and 10 mbps, there didn't seem to be a noticable difference between giving h1 "high priority" or "low priority" (see Results and Performance Analysis section below).
+
+Similarly, another challenge was the random nature of the testing scripts and the lack of standardized tools to evaluate network performance. For instance, since `send_traffic_onetoone.py` randomly sends packets and flows, it was very challenging to interpret the performance results from one trial to the next.
+
+As a result, performance evaluation of CONGA vs priority-based CONGA was done on a not very scientific basis by comparing the `nload` sessions (see below) from runs with different settings.
 
 ### Testing
-Testing can be done on the topology from project 6 as follows:
+Testing can be done on the medium topology from project 6 as follows:
+![medium topology](MediumTopologyDiagram.png).
 
 1. Start the medium size topology:
 
