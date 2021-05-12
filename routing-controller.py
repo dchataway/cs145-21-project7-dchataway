@@ -66,7 +66,8 @@ class RoutingController(object):
                         priority_num = 3                     
                     print "Node name: {}, ip address: {}, priority: {}".format(str(node), str(host_ip), str(priority_num))
                     self.controllers[sw_name].table_add("priority_type", "set_priority", [str(host_ip)], [str(priority_num)])
-                    self.controllers[sw_name].table_add("priority_type_dst", "set_priority", [str(host_ip)], [str(priority_num)])
+                    if self.apply_dst_priority:
+                        self.controllers[sw_name].table_add("priority_type_dst", "set_priority", [str(host_ip)], [str(priority_num)])
 
                 elif node_type == 'switch':
                     node_type_num = 2
