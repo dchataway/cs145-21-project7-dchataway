@@ -219,24 +219,24 @@ The base CONGA implementation utilizes code snippets from [Edgar Costa's](https:
 While this work was not specifically listed as a "direction" for project 7, I assumed it was within scope based on feedback from my submitted Proposal. I had hoped that this project would would serve as an interesting extension for future CONGA class work as part of Project 6.
 
 ## Appendix
-##### Case A: 
-![Case A]("Case A.PNG").
+##### Case A: Base CONGA, 1mpbs links
+![Case A]("CaseA.PNG").
 
-##### Case B: 
-![Case B]("Case B.PNG").
+##### Case B: Priority CONGA, 1mpbs links
+![Case B]("CaseB.PNG").
 
-##### Case C: 
-![Case C]("Case C.PNG").
+##### Case C: Base CONGA, 2mpbs links
+![Case C]("CaseC.PNG").
 
-##### Case D: 
-![Case D]("Case D.PNG").
+##### Case D: Priority CONGA, 2mpbs links 
+![Case D]("CaseD.PNG").
 
-##### Case E: 
-![Case E]("Case E.PNG").
+##### Case E: Priority CONGA (reversed), 2mpbs links
+![Case E]("CaseE.PNG").
 
-##### Case F: 
-![Case F]("Case F.PNG").
+##### Case F: Priority CONGA, 5mpbs links 
+![Case F]("CaseF.PNG").
 
-##### Case G: 
-![Case G]("Case G.PNG").
+##### Case G: Priority CONGA (reversed), 5mpbs links
+![Case G]("CaseG.PNG").
 
