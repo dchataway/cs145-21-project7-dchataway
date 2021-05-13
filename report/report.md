@@ -200,13 +200,15 @@ Note that in the table below, normal "priority CONGA" is configured such that h1
 
 | Case      | h1 (avg. mbps) | h2 (avg. mbps) | h3 (avg. mbps) | h4 (avg. mbps) |
 | ----------- | ----------- | ----------- | ----------- | ----------- |
-| A) Base CONGA, 1mpbs links                  | 60       | 10%       | 10%       | 10%       |
-| B) Priority CONGA, 1mpbs links              | 50        | 50%       | 10%       | 10%       |
-| C) Base CONGA, 2mpbs links                  | 60       | 10%       | 10%       | 10%       |
-| D) Priority CONGA, 2mpbs links              | 50        | 50%       | 10%       | 10%       |
-| E) Priority CONGA (reversed), 2mpbs links   | 35        | 90%       | 10%       | 10%       |
-| F) Priority CONGA, 2mpbs links              | 50        | 50%       | 10%       | 10%       |
-| G) Priority CONGA (reversed), 2mpbs links   | 35        | 90%       | 10%       | 10%       |
+| A) Base CONGA, 1mpbs links                  | 0.36961       | 0.34288       | 0.28784       | 0.82619       |
+| B) Priority CONGA, 1mpbs links              | 0.46878        | 0.23878       | 0.48362       | 0.88512       |
+| C) Base CONGA, 2mpbs links                  | 0.59838       | 0.64392       | 0.74589       | 1.66       |
+| D) Priority CONGA, 2mpbs links              | 0.64849        | 0.72938       | 0.71935       | 1.54       |
+| E) Priority CONGA (reversed), 2mpbs links   | 0.58988        | 0.8848       | 0.57487       | 1.56       |
+| F) Priority CONGA, 5mpbs links              | 1.46        | 1.71       | 1.35       | 3.68       |
+| G) Priority CONGA (reversed), 5mpbs links   | 1.43        | 1.61       | 1.55       | 3.69       |
+
+
 
 ## Citations
 The base CONGA implementation utilizes code snippets from [Edgar Costa's](https://github.com/nsg-ethz/p4-learning/tree/master/exercises/10-Congestion_Aware_Load_Balancing/solution) implementation as part of the p4-learning repo.
@@ -216,5 +218,5 @@ While this work was not specifically listed as a "direction" for project 7, I as
 
 ## Appendix
 ##### Case A: 
-![Case A](CaseA.png).
+![Case A](Case A.png).
 
