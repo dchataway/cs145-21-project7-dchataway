@@ -35,7 +35,7 @@ In the base CONGA implementation, congestion was attempted to be avoided using a
 
 However, in my design of the "priority-based" CONGA, conditions 1 and 3 were modified based on the packet's `meta.priority` value in order for high priority flows to send relatively fewer congestions notification messages. In particular, the changes were implemented (arbitarily through testing as follows):
 
-| Priority      | Queued Depth | Probability |
+| Packet Priority      | Queued Depth | Probability |
 | ----------- | ----------- | ----------- |
 | High (1)      | 60       | 10%       |
 | Medium (2)   | 50        | 50%       |
@@ -45,7 +45,8 @@ First, in order to set the `meta.priority` value of a packet, match-action table
 
 ```
     action set_priority(bit<4> priority) {
-       meta.priority = priority;
+        // store in meta data
+        meta.priority = priority;
     }
     table priority_type {
         key = {
@@ -58,61 +59,98 @@ First, in order to set the `meta.priority` value of a packet, match-action table
         size = 1024;
         default_action = NoAction;
     }
-```
-Then in the Egress processing, at the condition were a congestion notification packet is sent, I change the conditions based on the priority in the metadata, for example for the queue length:
-```
-        bit<16> queue_threshold;
-         // CODE THAT SETS QUEUE THRESHOLD BASED ON PRIORITY
-        if (meta.priority == TYPE_PRIORITY_HIGH) {
-            queue_threshold = 50; //originally 45
+    table priority_type_dst {
+        key = {
+            hdr.ipv4.dstAddr: lpm;
         }
-        else if (meta.priority == TYPE_PRIORITY_LOW) {
-            queue_threshold = 35; //originally 45
+        actions = {
+            set_priority;
+            NoAction;
         }
-        else {
-            queue_threshold = 45;
-        }
-                                      
-
-        if (hdr.telemetry.enq_qdepth > queue_threshold){
-        ...
-        }
+        size = 1024;
+        default_action = NoAction;
+    }
 ```
-and now for the probability:
+Then in the Egress processing, the conditions for congestion notification are different based on the priority in the metadata (according to the table included above). The code for the queued condition is as follows:
 ```
- 	bit<16> probability;
+	bit<16> queue_threshold;
+	if (PRIORITY_APPLY == 1) {
+	    if (meta.priority == TYPE_PRIORITY_HIGH) {
+		queue_threshold = 60; 
+	    }
+	    else if (meta.priority == TYPE_PRIORITY_LOW) {
+		queue_threshold = 35; 
+	    }
+	    else {
+		queue_threshold = 50;
+	    }
+	}
+	else {
+	    queue_threshold = 45;
+	}
+	if (hdr.telemetry.enq_qdepth > queue_threshold){
+	...
+	}
+```
+and the code for the probability threshold is as follows:
+```
+        bit<16> probability;
         bit<16> threshold;
-
-        // CODE THAT SETS PROBABILITY THRESHOLD BASED ON PRIORITY
-        if (meta.priority == TYPE_PRIORITY_HIGH) {
-            threshold = 10; //originally 10
-        }
-        else if (meta.priority == TYPE_PRIORITY_LOW) {
-            threshold = 90; //originally 90
+        if (PRIORITY_APPLY == 1) {
+            if (meta.priority == TYPE_PRIORITY_HIGH) {
+                threshold = 10;
+            }
+            else if (meta.priority == TYPE_PRIORITY_LOW) {
+                threshold = 90; 
+            }
+            else {
+                threshold = 50;
+            }
         }
         else {
-            threshold = 90;
-        }
-        
-
+            threshold = 33;
+        }       
         random(probability, (bit<16>)0, (bit<16>)100);
             if (probability < threshold) {
-                // Then clone the packet
-               clone3(CloneType.E2E, 100, meta); 
-            } 
+                clone3(CloneType.E2E, 100, meta);
+            }
 ```
 
-#### C
+#### Controller
 
-The controller sets the specific priority numbers: 1 for h1, 3 for h4 and 2 for all others. I think it does this correctly based on the print statement.
-
-
+The controller fills the match-action tables with the priority numbers configured in the instance attributes: 
+```
+        self.apply_src_priority = True
+        self.apply_dst_priority = False
+        self.src_high_priority = 'h1'
+        self.src_low_priority = 'h4'
+        self.dst_high_priority = 'h5'
+        self.dst_low_priority = 'h8'
+```
+Then in the `set_tables` function, the `table_add` methods are designed to do lpm matching based on the (source or destination) host ip and calling the `set_priority` action:
+```
+	if node_type == 'host':
+	    host_ip = self.topo.get_host_ip(node) + "/24"
+	    priority_num = 2
+	    if str(node) == self.src_high_priority and self.apply_src_priority:
+		priority_num = 1
+	    elif str(node) == self.src_low_priority and self.apply_src_priority:
+		priority_num = 3
+	    elif str(node) == self.dst_high_priority and self.apply_dst_priority:
+		priority_num = 1
+	    elif str(node) == self.dst_low_priority and self.apply_dst_priority:
+		priority_num = 3                     
+	    print "Node name: {}, ip address: {}, priority: {}".format(str(node), str(host_ip), str(priority_num))
+	    self.controllers[sw_name].table_add("priority_type", "set_priority", [str(host_ip)], [str(priority_num)])
+	    if self.apply_dst_priority:
+		self.controllers[sw_name].table_add("priority_type_dst", "set_priority", [str(host_ip)], [str(priority_num)])
+```
 
 ### Challenges
 
-I expected that in the base case, the CONGA implementation from Project 6 would have equal output across h1 to h4. 
+I expected that in the base CONGA case, running the main test script `send_traffic_onetoone.py` would result in approximately equal traffic output across h1 to h4, allowing for easy evaluation of configuration fields. 
 
-However that isn't the case: when running `sudo python send_traffic_onetoone.py 1000`, h4 always seems to have much higher average output than the other hosts (followed by h2 and h3 and then h1 last). When analysing `send_traffic_onetoone.py`, nothing seemed to suggest that h4 had a designed greater traffic output. In response to this [query in Ed](https://edstem.org/us/courses/3092/discussion/431758), Yang replied: "Maybe you would need more powerful VM (with more cores) for mininet simulation to see the difference, or try to scale down the link bandwidth." While I was unable to test with more cores, I did scale down the link bandwidth, which did appear to help accentuate the congestion performance difference. Specifically, at link bandwidths of 5 and 10 mbps, there didn't seem to be a noticable difference between giving h1 "high priority" or "low priority" (see Results and Performance Analysis section below).
+However that isn't the case: when running `send_traffic_onetoone.py`, h4 always seems to have much higher average output than the other hosts (followed by h2 and h3 and then h1 last). When analysing `send_traffic_onetoone.py`, nothing seemed to suggest that h4 had a designed greater traffic output. In response to this [query in Ed](https://edstem.org/us/courses/3092/discussion/431758), Yang replied: "Maybe you would need more powerful VM (with more cores) for mininet simulation to see the difference, or try to scale down the link bandwidth." While I was unable to test with more cores, I did scale down the link bandwidth, which did appear to help accentuate the congestion performance difference. Specifically, at link bandwidths of 5 and 10 mbps, there didn't seem to be a noticable difference between giving h1 "high priority" or "low priority" (see Results and Performance Analysis section below).
 
 Similarly, another challenge was the random nature of the testing scripts and the lack of standardized tools to evaluate network performance. For instance, since `send_traffic_onetoone.py` randomly sends traffic, it was very challenging to interpret the performance results from one trial to the next.
 
@@ -135,7 +173,7 @@ with 4 panes, in each pane it will lunch a `nload` session with a different inte
    tmux
    ./nload_tmux_medium.sh
    ```
-Or if you want to launch a `nload` session on s6 to observe the output to destination hosts(from `s6-eth1` to `s6-eth4`), which are the interfaces directly connected to `h5-h8` respectively:
+    Or if you want to launch a `nload` session on s6 to observe the output to destination hosts(from `s6-eth1` to `s6-eth4`), which are the interfaces directly connected to `h5-h8` respectively:
    ```bash
    tmux
    ./nload_tmux_medium_s6.sh
@@ -156,12 +194,27 @@ to stop the flow generation you can kill them:
    ```
 
 ### Results and Performance Analysis 
+The performance of the priority-based CONGA implementation was primarily evaluated by observing the average traffic output from hosts h1 to h4 after reaching approximately steady state, across different configuration settings. These results are shown in the table below and in screenshots included in the Appendix:
 
+Note that in the table below, normal "priority CONGA" is configured such that h1 is high priority and h4 is low priority. The "reversed" configuration is such that h4 is high priority and h1 is low priority.
+
+| Case      | h1 (avg. mbps) | h2 (avg. mbps) | h3 (avg. mbps) | h4 (avg. mbps) |
+| ----------- | ----------- | ----------- | ----------- | ----------- |
+| A) Base CONGA, 1mpbs links                  | 60       | 10%       | 10%       | 10%       |
+| B) Priority CONGA, 1mpbs links              | 50        | 50%       | 10%       | 10%       |
+| C) Base CONGA, 2mpbs links                  | 60       | 10%       | 10%       | 10%       |
+| D) Priority CONGA, 2mpbs links              | 50        | 50%       | 10%       | 10%       |
+| E) Priority CONGA (reversed), 2mpbs links   | 35        | 90%       | 10%       | 10%       |
+| F) Priority CONGA, 2mpbs links              | 50        | 50%       | 10%       | 10%       |
+| G) Priority CONGA (reversed), 2mpbs links   | 35        | 90%       | 10%       | 10%       |
 
 ## Citations
 The base CONGA implementation utilizes code snippets from [Edgar Costa's](https://github.com/nsg-ethz/p4-learning/tree/master/exercises/10-Congestion_Aware_Load_Balancing/solution) implementation as part of the p4-learning repo.
 
 ## Grading notes
-While this work was not specifically listed as a "direction" for project 7, I assumed it was within scope based on feedback from the Proposal. I had hoped that this would would serve as an interesting extension for future CONGA work as part of Project 6.
+While this work was not specifically listed as a "direction" for project 7, I assumed it was within scope based on feedback from my submitted Proposal. I had hoped that this project would would serve as an interesting extension for future CONGA class work as part of Project 6.
 
+## Appendix
+##### Case A: 
+![Case A](CaseA.png).
 

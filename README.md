@@ -9,11 +9,11 @@ Repository for David Chataway's project 7 work for Harvard CS145.
 For my Project 7, I am pursuing an open-ended topic: designing (what I call) "priority"-based CONGA load balancing, whereby certain flows are given priority over others. Please refer to `report/report.md` for more information.
 
 ## Report
-Please refer to `report/report.md` for the submission report with further information.
+Please refer to [`report/report.md`](https://github.com/dchataway/cs145-21-project7-dchataway/blob/main/report/report.md) for the submission report with further information.
 
 ## What is Provided
 - `topology/p4app-medium.json`: creates the topology for testing and performance analysis with the help of mininet and - p4-utils package.
-- `p4src/loadbalancer.p4`: we will use the solution of the 08-Simple_Routing exercise as starting point.
+- `p4src/loadbalancer.p4`: the switch logic based on the Project 6 CONGA implementation.
 - `routing-controller.py`: routing controller.
 - `nload_tmux_*.sh`: scripts that will create a tmux window, and nload in different panes.
 And copied from the Project 6 repo: 
