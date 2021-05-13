@@ -220,23 +220,23 @@ While this work was not specifically listed as a "direction" for project 7, I as
 
 ## Appendix
 ##### Case A: Base CONGA, 1mpbs links
-![Case A]("CaseA.png")
+![Case A](CaseA.png)
 
 ##### Case B: Priority CONGA, 1mpbs links
-![Case B]("CaseB.PNG").
+![Case B](CaseB.PNG).
 
 ##### Case C: Base CONGA, 2mpbs links
-![Case C]("CaseC.PNG").
+![Case C](CaseC.PNG).
 
 ##### Case D: Priority CONGA, 2mpbs links 
-![Case D]("CaseD.PNG").
+![Case D](CaseD.PNG).
 
 ##### Case E: Priority CONGA (reversed), 2mpbs links
-![Case E]("CaseE.PNG").
+![Case E](CaseE.PNG).
 
 ##### Case F: Priority CONGA, 5mpbs links 
-![Case F]("CaseF.PNG").
+![Case F](CaseF.PNG).
 
 ##### Case G: Priority CONGA (reversed), 5mpbs links
-![Case G]("CaseG.PNG").
+![Case G](CaseG.PNG).
 
