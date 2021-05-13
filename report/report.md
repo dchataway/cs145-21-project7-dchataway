@@ -208,9 +208,9 @@ The performance of the priority-based CONGA implementation was primarily evaluat
 | F) Priority CONGA, 5mpbs links              | 1.46        | 1.71       | 1.35       | 3.68       |
 | G) Priority CONGA (reversed), 5mpbs links   | 1.43        | 1.61       | 1.55       | 3.69       |
 
-The avg. traffic output results from the testing seem to suggest that the priority-based CONGA is effective when the link bandwidths are lower than 5 mpbs (perhaps due to the generation of more congestion on the smaller links). With 5 mbps links, there was little difference in the results when h1 was given high priority and h4 was given low priority (Case F) vs the opposite configuration (Case G). However, with 1 and 2 mbps links, subtle differences were observed. In particular, when h1 was given high priority it resulted in higher traffic output for both 1 mbps and 2 mbps links (cases B and D) as compared to the respective base CONGA (cases A and C). This was the intended performance as it was hoped that moving flows less frequently from h1 would result in higher traffic output. However, as discussed in the Challenges section, it is unclear if these results are significant considering the high variability and randomness of the testing script. 
+The avg. traffic output results from the testing seem to suggest that the priority-based CONGA may be effective when the link bandwidths are lower than 5 mpbs (perhaps due to the generation of more congestion on the smaller links). With 5 mbps links, there was little difference in the results when h1 was given high priority and h4 was given low priority (Case F) vs the opposite configuration (Case G). However, with 1 and 2 mbps links, subtle differences were observed. In particular, when h1 was given high priority it resulted in higher traffic output for both 1 mbps and 2 mbps links (cases B and D) as compared to the respective base CONGA (cases A and C). This was the intended performance as it was hoped that moving flows less frequently from h1 would result in higher traffic output relative to the base CONGA case in which flows were moved equally. However, as discussed in the Challenges section, it is unclear if these results are significant considering the high variability and randomness of the testing script. 
 
-In general, this subtle differences in output from the "priority-based" CONGA (CONGA with priority-based congestion notification conditions) suggest that it is not the best manner to implement priority-based routing. It is possible that a more advanced algorithm (rather than just randomly re-hashing flows upon receiving a congestion notification) along with the priority-based design would result in better performance. However, the results of this exercise demonstrate to me that a distributed solution may not be best and that a global congestion aware solution would be best to implement priority-based routing. Furthermore, my design - in which high priority flows are re-hashed relatively less frequently - may be susceptible to congestion deeper in the network and/or to link failures.
+In general, the subtleness of the differences in output from the "priority-based" CONGA (CONGA with priority-based congestion notification conditions) suggest that it may not be the best manner to implement priority-based routing. Granted, it is possible that a more advanced algorithm (rather than just randomly re-hashing flows upon receiving a congestion notification) along with the priority-based design may result in better performance with this design. However, the results of this exercise demonstrate to me that a distributed solution is likely not best and that a global congestion aware solution would be best to implement priority-based routing. Furthermore, my design - in which high priority flows are re-hashed relatively less frequently - may be susceptible to congestion deeper in the network and/or to link failures.
 
 ## Citations
 The base CONGA implementation utilizes code snippets from [Edgar Costa's](https://github.com/nsg-ethz/p4-learning/tree/master/exercises/10-Congestion_Aware_Load_Balancing/solution) implementation as part of the p4-learning repo.
@@ -220,23 +220,23 @@ While this work was not specifically listed as a "direction" for project 7, I as
 
 ## Appendix
 ##### Case A: 
-![Case A]("Case A".png).
+![Case A]("Case A.png").
 
 ##### Case B: 
-![Case A]("Case B".png).
+![Case B]("Case B.png").
 
 ##### Case C: 
-![Case A]("Case C".png).
+![Case C]("Case C.png").
 
 ##### Case D: 
-![Case A]("Case D".png).
+![Case D]("Case D.png").
 
 ##### Case E: 
-![Case A]("Case E".png).
+![Case E]("Case E.png").
 
 ##### Case F: 
-![Case A]("Case F".png).
+![Case F]("Case F.png").
 
 ##### Case G: 
-![Case A]("Case G".png).
+![Case G]("Case G.png").
 
