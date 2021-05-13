@@ -220,23 +220,23 @@ While this work was not specifically listed as a "direction" for project 7, I as
 
 ## Appendix
 ##### Case A: 
-![Case A]("Case A.png").
+![Case A]("Case A.PNG").
 
 ##### Case B: 
-![Case B]("Case B.png").
+![Case B]("Case B.PNG").
 
 ##### Case C: 
-![Case C]("Case C.png").
+![Case C]("Case C.PNG").
 
 ##### Case D: 
-![Case D]("Case D.png").
+![Case D]("Case D.PNG").
 
 ##### Case E: 
-![Case E]("Case E.png").
+![Case E]("Case E.PNG").
 
 ##### Case F: 
-![Case F]("Case F.png").
+![Case F]("Case F.PNG").
 
 ##### Case G: 
-![Case G]("Case G.png").
+![Case G]("Case G.PNG").
 
