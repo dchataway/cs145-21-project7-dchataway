@@ -58,7 +58,7 @@ with 4 panes, in each pane it will lunch a `nload` session with a different inte
    tmux
    ./nload_tmux_medium.sh
    ```
-Or if you want to launch a `nload` session on s6 (from `s6-eth1` to `s6-eth4`), which are the interfaces directly connected to `h5-h8`:
+    Or if you want to launch a `nload` session on s6 (from `s6-eth1` to `s6-eth4`), which are the interfaces directly connected to `h5-h8`:
    ```bash
    tmux
    ./nload_tmux_medium_s6.sh

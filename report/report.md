@@ -11,13 +11,15 @@ Yang and Mason helped guide the project following review of the Proposal. Also I
 ### Goal
 The goal of this project was to design (what I call) "priority"-based CONGA load balancing, whereby certain flows are given priority over others. Flows with higher priority would react less to congestion in the flow (whereas the other flows with lower priority would be more likely to shift routes) in order for high priority flows to maintain stability and hopefully more traffic throughput. In other words, the "low priority" flows would "get out of the way" of the "high priority" flows. 
 
-Furthermore, a goal of this project was to implement this mechanism with CONGA in the control plane so that the load balancing could continue to be done on a distributed basis and the logic dictating flow priority would be implemented only by a controller. 
+Furthermore, a goal of this project was to implement this mechanism together with CONGA in the control plane so that the load balancing would be done on a distributed basis and the logic dictating the flow priority would be implemented only by a controller. 
 
 ### Design and Implementation
 The design of the priority-based CONGA load balancing was primarily centered around modifying the conditions by which an egress sends a congestion notification message to the ingress switch, for different flows based on their designated "priority". In particular, modifications were made to the base CONGA code in the following files:
 1. Headers
 2. Load Balancer
 3. Routing Controller
+
+Relevant code blocks in the above files are described in the sub-sections below. Refer to `README.md` in the parent directory for a list of, and more information about, the included files and configuration fields.
 
 #### Headers
 A new metadata attribute was declared in the `p4src/include/headers.p4` file to be used to store the `priority` integer.
@@ -31,7 +33,7 @@ In the base CONGA implementation, congestion was attempted to be avoided using a
 2. The incoming packet has a timestamp greater than a timeout threshold of 0.75 s per flow;
 3. The flow was randomly selected 33% of the time.  <p>
 
-However, in my design of the "priority-based" CONGA, conditions 1 and 3 were modified based on the packet's `meta.priority` value in order for high priority flows to send relatively fewer congestions notification messages. In particular, the changes were implemented (arbitarily as follows):
+However, in my design of the "priority-based" CONGA, conditions 1 and 3 were modified based on the packet's `meta.priority` value in order for high priority flows to send relatively fewer congestions notification messages. In particular, the changes were implemented (arbitarily through testing as follows):
 
 | Priority      | Queued Depth | Probability |
 | ----------- | ----------- | ----------- |
@@ -39,7 +41,7 @@ However, in my design of the "priority-based" CONGA, conditions 1 and 3 were mod
 | Medium (2)   | 50        | 50%       |
 | Low (3)   | 35        | 90%       |
 
-First, in order to set the `meta.priority` value of a packet, match-action tables were created in the ingress processing based off of `srcAddr` and/or `dstAddr` as follows:
+First, in order to set the `meta.priority` value of a packet, match-action tables were applied in the ingress processing based off of `srcAddr` and/or `dstAddr` as follows:
 
 ```
     action set_priority(bit<4> priority) {
