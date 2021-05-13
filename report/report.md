@@ -220,7 +220,7 @@ While this work was not specifically listed as a "direction" for project 7, I as
 
 ## Appendix
 ##### Case A: Base CONGA, 1mpbs links
-![Case A]("CaseA.PNG").
+![Case A]("CaseA.png")
 
 ##### Case B: Priority CONGA, 1mpbs links
 ![Case B]("CaseB.PNG").
